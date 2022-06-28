@@ -20,7 +20,7 @@ class NNClassifier(nn.Module):
         ##############
         ##############
 
-        #define three linear layers
+        #define three linear layers#
 
         num_of_features_input = 111
         num_of_classes = 2
