@@ -1,10 +1,10 @@
-import pandas as pd
-import random
+
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import random
 from scipy.signal import savgol_filter
+import os
 
 
 def importData(datafile):
@@ -23,6 +23,12 @@ def importData(datafile):
 
 
 def testCorrelation(data):
+
+    dir = '../DataCorrelation'
+    for f in os.listdir(dir):
+        os.remove(os.path.join(dir, f))
+
+
     randomlist = []
     for i in range(0, 5):
         n = random.randint(1, 1300)
@@ -46,6 +52,7 @@ def testCorrelation(data):
         ave2 = np.average(signal2_DN)
 
         #signal1_DN_s = signal1_DN_s + (ave2 - ave1)
+
 
         r = np.corrcoef(signal1_DN_s, signal2_DN)
 
