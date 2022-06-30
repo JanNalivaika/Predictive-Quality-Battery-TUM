@@ -44,7 +44,7 @@ def percentilation(signal1, signal2, pct_val, num_pct_window, num_of_samples):
         plt.legend()
         plt.show()
 
-        #plt.savefig("../DataCorrelation/" + str(x) + ".png", dpi=500)
+        ##plt.savefig("../DataCorrelation/" + str(x) + ".png", dpi=500)
         plt.close()
 
 
