@@ -65,7 +65,7 @@ def main():
     for x in range(1000):
         BATCH_SIZE = random.randint(64, 512)
         EPOCHS = random.randint(64, 512)
-        LEARNING_RATE = random.uniform(0.0001, 0.001)
+        LEARNING_RATE = random.uniform(0.0001, 0.03)
 
         datafile = "../Data/Datensatz_Batteriekontaktierung.xlsx"
         data = importData(datafile)
@@ -83,6 +83,7 @@ def main():
 
         ### determine input ###
         X = signal1_DN
+        X = signal2
         X = signal1
         y = nok
 
