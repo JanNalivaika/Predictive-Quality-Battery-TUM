@@ -8,7 +8,7 @@ import pywt
 
 def plot_cwt(data):
 
-    scales = range(1, 128) # arbitrary range, to be adjusted
+    scales = range(1, 3000) # arbitrary range, to be adjusted
     wavelet = 'morl' # generic approach
 
     randomlist = []
@@ -25,6 +25,9 @@ def plot_cwt(data):
         signal1 = data[x, 6:117]
         signal1_DN = data[x, 118:229]
         signal2 = data[x, 230:341]
+
+        x = np.linspace(0.0, 1, 111)
+        y = np.sin(50.0 * 2.0 * np.pi * x) + np.sin(80.0 * 2.0 * np.pi * x) + np.sin(180.0 * 2.0 * np.pi * x)
 
         coefs1, freqs1 = pywt.cwt(signal1, scales, wavelet)
         coefs1_dn, freqs1_dn = pywt.cwt(signal1_DN, scales, wavelet)
