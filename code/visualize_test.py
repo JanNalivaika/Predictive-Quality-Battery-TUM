@@ -97,7 +97,7 @@ def testCorrelation(data):
         plt.figure()
         plt.title("Sample " + str(x) + " Correlation = " + str(r_pct[0, 1]))
 
-       # plt.plot(signal1, label="Signal 1")
+       ## plt.plot(signal1, label="Signal 1")
         #plt.plot(signal2, label="Signal 2")
         #plt.plot(signal1_DN, label="Signal 1 DN original")
         #plt.plot(signal2_DN, label="Signal 2 DN")
