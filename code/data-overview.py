@@ -3,11 +3,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import random as rd
 
-df = pd.read_excel("Datensatz_Batteriekontaktierung.xlsx")
+df = pd.read_excel("../Data/Datensatz_Batteriekontaktierung.xlsx")
 
 def plot_examples(df: pd.DataFrame, n: int):
     if n > len(df.index):
-        print("Please enter a numer smaller than ", str(len(df.index)))
+        print("Please enter a number smaller than ", str(len(df.index)))
         return
     examples = []
     
