@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import random as rd
 
-df = pd.read_excel("../Data/Datensatz_Batteriekontaktierung.xlsx")
+df = pd.read_excel("../Data/All/All_Data.xlsx")
 
 def plot_examples(df: pd.DataFrame, n: int):
     if n > len(df.index):

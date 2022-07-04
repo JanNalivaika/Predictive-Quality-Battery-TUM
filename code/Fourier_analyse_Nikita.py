@@ -24,16 +24,19 @@ def importData(datafile):
         #print("we are here")
     return df
 
-def selector(data):
-    x = random.randint(1, 1300) # 0
+def selector(data, x):
+    #x = random.randint(2, 200) # 0 - 200 WD 40 / 200 - 400 GLeitmo
     signal1 = data[x, 6:117]
     signal1_DN = data[x, 118:229]
     signal2 = data[x, 230:341]
+    signal1_sample2 = data[x+200, 6:117]
+    signal1_DN_sample2 = data[x+200, 118:229]
+    signal2_sample2 = data[x+200, 230:341]
 
-    return signal1, signal1_DN, signal2, x
+    return signal1, signal1_DN, signal2, signal1_sample2
 
 
-def fourier(s1,s1DN, s2):
+def fourier(s1,s1DN, s2, s1_sample2):
     # Number of samplepoints
     N = 200
     # sample spacing
@@ -45,30 +48,40 @@ def fourier(s1,s1DN, s2):
 
     yf_1 = scipy.fftpack.fft(s1)
     #print(yf_1)
-    yf_1DN = scipy.fftpack.fft(s1DN)
-    yf_2 = scipy.fftpack.fft(s2)
+    #yf_1DN = scipy.fftpack.fft(s1DN)
+    #yf_2 = scipy.fftpack.fft(s2)
+    yf_1_sample2 = scipy.fftpack.fft(s1_sample2)
+    #test = scipy.fftpack.fft(y)
 
-    test = scipy.fftpack.fft(y)
-
-    yf_1DN_self = scipy.fftpack.fft(signal1_DN_self)
+    #yf_1DN_self = scipy.fftpack.fft(signal1_DN_self)
 
 
     xf = np.linspace(0.0, 1.0 / (2.0 * T), N // 2)
     #print(xf)
 
     fig, ax = plt.subplots()
-    ax.plot(xf, 2.0 / N * np.abs(yf_1[:N // 2]), label="S1")
-    ax.plot(xf, 2.0 / N * np.abs(yf_1DN[:N // 2]), label="S1DN")
-    ax.plot(xf, 2.0 / N * np.abs(yf_2[:N // 2]), label="S2")
-    delme1 = 2.0 / N * np.abs(yf_1[:N // 2])
-    delme2 = 2.0 / N * np.abs(yf_2[:N // 2])
-    r = np.corrcoef(delme1, delme2)
-    ax.plot(xf, 2.0 / N * np.abs(yf_1DN_self[:N // 2]), label="S1DN_self")
+    ax.plot(xf, 2.0 / N * np.abs(yf_1[:N // 2]), label="Sample WD 40")
+
+    ax.plot(xf, 2.0 / N * np.abs(yf_1_sample2[:N // 2]), label="Sample Gleitmo")
+
+    #ax.plot(xf, 2.0 / N * np.abs(yf_1DN[:N // 2]), label="S1DN")
+    #ax.plot(xf, 2.0 / N * np.abs(yf_2[:N // 2]), label="S2")
+    #delme1 = 2.0 / N * np.abs(yf_1[:N // 2])
+    #delme2 = 2.0 / N * np.abs(yf_2[:N // 2])
+    #r = np.corrcoef(delme1, delme2)
+    #ax.plot(xf, 2.0 / N * np.abs(yf_1DN_self[:N // 2]), label="S1DN_self")
     #ax.plot(xf, 2.0 / N * np.abs(test[:N // 2]), label="S1DN_self")
     plt.legend()
-    n_sample = selector(data)[3]
-    plt.title("Sample " + str(n_sample))
-    plt.savefig("../DataCorrelation/Fourier.png", dpi=500)
+    #n_sample = selector(data, i)[4]
+    #sample2_NOK = data[(selector(data)[4] + 200), 0]
+    #sample1_NOK = data[selector(data)[4], 0]
+    n_sample = i + 1
+    sample2_NOK = data[(i + 200), 0]
+    sample1_NOK = data[i, 0]
+    print(data[i + 200, 4], data[i +200 , 5])
+    plt.title("Sample " + str(n_sample) + " NOK = " + str(int(sample1_NOK)) + " and " + str(n_sample + 200) + " NOK = " + str(int(sample2_NOK)))
+    fig_name = str("../DataCorrelation/Fourier" + str(i + 1) + ".png")
+    plt.savefig(fig_name, dpi=500)
     plt.show()
     plt.close()
 
@@ -79,8 +92,9 @@ if __name__ == "__main__":
     print("Lets GOOOOO")
     datafile = "../Data/All/All_Data.xlsx"
     data = importData(datafile)
-    s1 , s1DN, s2 = selector(data)[0:3]
-    fourier(s1,s1DN, s2)
+    for i in range(0, 10):
+        s1 , s1DN, s2, s1_sample2 = selector(data, i)[0:4]
+        fourier(s1,s1DN, s2, s1_sample2)
     pass
 
 

@@ -5,27 +5,32 @@ import random
 import pandas as pd
 from scipy.signal import savgol_filter
 
+
+
 def importData(datafile):
     try:
         new_name = datafile.replace(".xlsx", ".npy")
         with open(new_name, 'rb') as f:
             df = np.load(f)
+            #print(df)
     except:
         df = pd.read_excel(io=datafile)
+        print(df)
         df = np.asarray(df)
+        print(df)
         new_name = datafile.replace(".xlsx", ".npy")
         with open(new_name, 'wb') as f:
             np.save(f, df)
-
+        #print("we are here")
     return df
 
 def selector(data):
-    x = random.randint(1, 1300)
+    x = random.randint(1, 1300) # 0
     signal1 = data[x, 6:117]
     signal1_DN = data[x, 118:229]
     signal2 = data[x, 230:341]
 
-    return signal1, signal1_DN, signal2
+    return signal1, signal1_DN, signal2, x
 
 
 def fourier(s1,s1DN, s2):
@@ -39,6 +44,7 @@ def fourier(s1,s1DN, s2):
     signal1_DN_self = savgol_filter(s1, 111, 9)
 
     yf_1 = scipy.fftpack.fft(s1)
+    #print(yf_1)
     yf_1DN = scipy.fftpack.fft(s1DN)
     yf_2 = scipy.fftpack.fft(s2)
 
@@ -48,6 +54,7 @@ def fourier(s1,s1DN, s2):
 
 
     xf = np.linspace(0.0, 1.0 / (2.0 * T), N // 2)
+    #print(xf)
 
     fig, ax = plt.subplots()
     ax.plot(xf, 2.0 / N * np.abs(yf_1[:N // 2]), label="S1")
@@ -59,6 +66,8 @@ def fourier(s1,s1DN, s2):
     ax.plot(xf, 2.0 / N * np.abs(yf_1DN_self[:N // 2]), label="S1DN_self")
     #ax.plot(xf, 2.0 / N * np.abs(test[:N // 2]), label="S1DN_self")
     plt.legend()
+    n_sample = selector(data)[3]
+    plt.title("Sample " + str(n_sample))
     plt.savefig("../DataCorrelation/Fourier.png", dpi=500)
     plt.show()
     plt.close()
@@ -68,9 +77,9 @@ def fourier(s1,s1DN, s2):
 
 if __name__ == "__main__":
     print("Lets GOOOOO")
-    datafile = "../Data/Datensatz_Batteriekontaktierung.xlsx"
+    datafile = "../Data/All/All_Data.xlsx"
     data = importData(datafile)
-    s1 , s1DN, s2 = selector(data)
+    s1 , s1DN, s2 = selector(data)[0:3]
     fourier(s1,s1DN, s2)
     pass
 
