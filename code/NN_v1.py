@@ -6,13 +6,14 @@ from torch.nn import Sequential, Linear, ReLU, MSELoss, L1Loss, CrossEntropyLoss
 from torch.optim import Adam, RMSprop, SGD, NAdam
 from torch import from_numpy, no_grad, argmax
 from torch.utils.data import DataLoader, TensorDataset, random_split
-from sklearn import preprocessing#
+from sklearn import preprocessing  #
 from sklearn.model_selection import train_test_split
 from visualize_test import importData
 import torch.nn.functional as F
 import matplotlib
 import matplotlib.pyplot as plt
 import warnings
+
 warnings.filterwarnings("ignore", category=UserWarning)
 
 
@@ -22,9 +23,9 @@ class NNClassifier(nn.Module):
         ##############
         ##############
 
-        #define three linear layers##
+        # define three linear layers##
 
-        num_of_features_input = 113
+        num_of_features_input = 112
         num_of_classes = 2
 
         self.fc1 = nn.Linear(num_of_features_input, 100)
@@ -41,7 +42,7 @@ class NNClassifier(nn.Module):
         ##############
         ##############
 
-        #define the activation functions for the three previously define linear layers
+        # define the activation functions for the three previously define linear layers
 
         x = torch.relu(self.fc1(x))
         x = torch.relu(self.fc2(x))
@@ -58,44 +59,45 @@ class NNClassifier(nn.Module):
 def main():
     torch.manual_seed(123)
     BATCH_SIZE = 64
-    EPOCHS = 100
+    EPOCHS = 64
     LEARNING_RATE = 0.0005
-
 
     datafile = "../Data/S1.xlsx"
     data = importData(datafile)
 
-    signal = data[:, 1:114]  # rows = samples, col. = features
+    signal = data[:, 3:]  # rows = samples, col. = features
 
-    nok = data[:, 0]     # 1 = not ok, 0 = ok
-    signal_th = data[:, 1]  # 1 = exceeds, 0 = doesnt exceed
-    WD_40 = data[:, 2]      # 1 = WD-40, 0 = no WD-40
-    Gleitmo = data[:, 2]    # 1 = Gleitmo, 0 = no gleitmo
-    Lube = (WD_40 + Gleitmo)/2  # 1 = Lubricant, 0 = no Lubricant
-
+    nok = data[:, 0]  # 1 = not ok, 0 = ok
+    WD_40 = data[:, 1]  # 1 = WD-40, 0 = no WD-40
+    Gleitmo = data[:, 2]  # 1 = Gleitmo, 0 = no gleitmo
+    lubericant = WD_40 + Gleitmo
     ### determine input ###
     X = signal
-    #combined = np.concatenate((signal1, signal2, signal1_DN), axis=1)
+    # combined = np.concatenate((signal1, signal2, signal1_DN), axis=1)
     y = nok
+    # y = WD_40
+    # y = Gleitmo
+    # y = lubericant
 
-    #BATCH_SIZE = int(data.shape[0]/10) #size of the batches the data is split up into
-    #print('Data Size:', data.shape[0], 'Batch Size:', BATCH_SIZE)
+    # BATCH_SIZE = int(data.shape[0]/10) #size of the batches the data is split up into
+    # print('Data Size:', data.shape[0], 'Batch Size:', BATCH_SIZE)
 
-    #histogramm of the labels
-    #plt.hist(y, 2)
-    #plt.show()
+    # histogramm of the labels
+    # plt.hist(y, 2)
+    # plt.show()
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.8, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, )  # random_state=42)
 
-    scaler = preprocessing.StandardScaler() #normalize the data
+    scaler = preprocessing.StandardScaler()  # normalize the data
     X_train_scaled = scaler.fit_transform(X_train)
     X_test_scaled = scaler.transform(X_test)
 
     ##############
     ##############
 
-    #convert data to Tensor and initialize dataloader
-    X_train_scaled, X_test_scaled = torch.from_numpy(X_train_scaled.astype(float)).float(), torch.from_numpy(X_test_scaled.astype(float)).float()
+    # convert data to Tensor and initialize dataloader
+    X_train_scaled, X_test_scaled = torch.from_numpy(X_train_scaled.astype(float)).float(), torch.from_numpy(
+        X_test_scaled.astype(float)).float()
     y_train, y_test = torch.from_numpy(y_train.astype(float)).float(), torch.from_numpy(y_test.astype(float)).float()
 
     dl_train = DataLoader(TensorDataset(X_train_scaled, y_train), batch_size=BATCH_SIZE, shuffle=True)
@@ -104,10 +106,10 @@ def main():
     ##############
     ##############
 
-    standard_model = NNClassifier() #create model from calss NNClassifier
+    standard_model = NNClassifier()  # create model from calss NNClassifier
 
-    optimizer = Adam(standard_model.parameters(), lr=LEARNING_RATE)  #optimizer for finding optimal weights
-    loss_fun = CrossEntropyLoss() #define common loss function for classification
+    optimizer = Adam(standard_model.parameters(), lr=LEARNING_RATE)  # optimizer for finding optimal weights
+    loss_fun = CrossEntropyLoss()  # define common loss function for classification
 
     for epoch in range(EPOCHS):
         epoch_loss = 0.0
@@ -155,8 +157,7 @@ def main():
         standard_model.train()
 
         print(["Epoch: %d, Training accuracy: %3.4f, Validation accuracy: %3.4f" % (
-                epoch + 1, acc * 100 / len(dl_train.dataset), val_acc * 100 / len(dl_test.dataset))])
-
+            epoch + 1, acc * 100 / len(dl_train.dataset), val_acc * 100 / len(dl_test.dataset))])
 
     torch.save(standard_model.state_dict(), "my_classification_model.pt")
 
