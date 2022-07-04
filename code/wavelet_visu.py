@@ -8,7 +8,7 @@ import pywt
 
 def plot_cwt(data):
 
-    scales = range(1, 3000) # arbitrary range, to be adjusted
+    scales = range(1, 1000) # arbitrary range, to be adjusted
     wavelet = 'morl' # generic approach
 
     randomlist = []
