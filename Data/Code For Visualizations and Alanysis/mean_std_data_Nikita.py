@@ -41,7 +41,8 @@ if __name__ == "__main__":
     TH1 = "../OOT/S1_OOT_ONLY.xlsx"
     TH1_DN = "../OOT/S1_DN_OOT_ONLY.xlsx"
     TH2 = "../OOT/S2_OOT_ONLY.xlsx"
-    data = read_pandas(S1)
+
+    data = read_pandas(S1_DN)
     mean, std = mean_and_std(data)
     rmsvalues = pd.Series([RMS(e[1]) for e in data.iterrows()])
     x = np.arange(len(mean))
@@ -64,8 +65,13 @@ if __name__ == "__main__":
     for g in np.unique(group):
         ix = np.where(group == g)
         ax.scatter(scatter_x[ix], scatter_y[ix], c=cdict[g], label=g, s=10)
+    plt.axvline(x=200, color='black')
+    plt.axvline(x=401, color='black')
+    plt.axvline(x=720, color='black')
+    plt.axvline(x=835, color='black')
+    plt.axvline(x=958, color='black')
     ax.legend()
-    plt.title("jan")
+    plt.title("std")
     plt.savefig("Data_Visualization_plots/Statistical_approach/Std_S1_w.o_OTT_JAN.png", dpi=500)
 
 
