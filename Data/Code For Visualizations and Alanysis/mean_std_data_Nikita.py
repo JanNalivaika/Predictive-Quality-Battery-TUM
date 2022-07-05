@@ -20,7 +20,8 @@ import matplotlib.pyplot as plt
 
 def read_pandas(datafile):
     df = pd.read_excel(io=datafile)
-    return df
+    df_just_signal = df.drop(['not OK', 'WD40', 'Gleitmo'], axis = 1)
+    return df, df_just_signal
 
 def mean_and_std (pandas_df):
     mean = pandas_df.mean(axis = 1)
@@ -42,9 +43,10 @@ if __name__ == "__main__":
     TH1_DN = "../OOT/S1_DN_OOT_ONLY.xlsx"
     TH2 = "../OOT/S2_OOT_ONLY.xlsx"
 
-    data = read_pandas(S1_DN)
-    mean, std = mean_and_std(data)
-    rmsvalues = pd.Series([RMS(e[1]) for e in data.iterrows()])
+    data, data_just_signal = read_pandas(S1_DN)
+    mean, std = mean_and_std(data_just_signal)
+    rmsvalues = pd.Series([RMS(e[1]) for e in data_just_signal.iterrows()])
+
     x = np.arange(len(mean))
     plt.title("mean")                       #MEAN
     plt.scatter(x, mean)
