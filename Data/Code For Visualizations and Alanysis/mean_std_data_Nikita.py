@@ -59,19 +59,11 @@ if __name__ == "__main__":
     scatter_x = np.array(x)
     scatter_y = np.array(std)
     group = np.array(data.iloc[:, 0])
-<<<<<<< HEAD
     cdict = {0: 'green', 1: 'red'}
     fig, ax = plt.subplots()
     for g in np.unique(group):
         ix = np.where(group == g)
         ax.scatter(scatter_x[ix], scatter_y[ix], c=cdict[g], label=g, s=10)
-=======
-    cdict = {0: 'red', 1: 'blue'}
-    fig, ax = plt.subplots()
-    for g in np.unique(group):
-        ix = np.where(group == g)
-        ax.scatter(scatter_x[ix], scatter_y[ix], c=cdict[g], label=g, s=100)
->>>>>>> 5b306c2d6db5f7077ee2fe2f6bdf0b510c59460b
     ax.legend()
     plt.title("jan")
     plt.savefig("Data_Visualization_plots/Statistical_approach/Std_S1_w.o_OTT_JAN.png", dpi=500)
