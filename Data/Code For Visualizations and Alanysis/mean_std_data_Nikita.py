@@ -55,6 +55,22 @@ if __name__ == "__main__":
     plt.savefig("Data_Visualization_plots/Statistical_approach/Std_S1_w.o_OTT.png", dpi=500)
 
 
+
+    scatter_x = np.array(x)
+    scatter_y = np.array(std)
+    group = np.array(data.iloc[:, 0])
+    cdict = {0: 'red', 1: 'blue'}
+    fig, ax = plt.subplots()
+    for g in np.unique(group):
+        ix = np.where(group == g)
+        ax.scatter(scatter_x[ix], scatter_y[ix], c=cdict[g], label=g, s=100)
+    ax.legend()
+    plt.title("jan")
+    plt.savefig("Data_Visualization_plots/Statistical_approach/Std_S1_w.o_OTT_JAN.png", dpi=500)
+
+
+
+
     plt.figure()
     plt.title("rms")                        #RMS
     plt.scatter(x, rmsvalues)
