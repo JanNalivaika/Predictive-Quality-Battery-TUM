@@ -28,12 +28,12 @@ class NNClassifier(nn.Module):
         num_of_features_input = 112
         num_of_classes = 2
 
-        self.fc1 = nn.Linear(num_of_features_input, 100)
-        self.fc2 = nn.Linear(100, 80)
-        self.fc3 = nn.Linear(80, 60)
-        self.fc4 = nn.Linear(60, 50)
-        self.fc5 = nn.Linear(50, 30)
-        self.fcOut = nn.Linear(30, num_of_classes)
+        self.fc1 = nn.Linear(num_of_features_input, 50)
+        self.fc2 = nn.Linear(50, 40)
+        self.fc3 = nn.Linear(40, 30)
+        self.fc4 = nn.Linear(30, 20)
+        self.fc5 = nn.Linear(20, 10)
+        self.fcOut = nn.Linear(10, num_of_classes)
 
         ##############
         ##############
@@ -60,7 +60,7 @@ def main():
     torch.manual_seed(123)
     BATCH_SIZE = 64
     EPOCHS = 64
-    LEARNING_RATE = 0.0005
+    LEARNING_RATE = 0.0001
 
     datafile = "../Data/S1.xlsx"
     data = importData(datafile)
@@ -75,8 +75,8 @@ def main():
     X = signal
     # combined = np.concatenate((signal1, signal2, signal1_DN), axis=1)
     y = nok
-    # y = WD_40
-    # y = Gleitmo
+    #y = WD_40
+    #y = Gleitmo
     # y = lubericant
 
     # BATCH_SIZE = int(data.shape[0]/10) #size of the batches the data is split up into
@@ -86,7 +86,7 @@ def main():
     # plt.hist(y, 2)
     # plt.show()
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, )  # random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.4)  # random_state=42)
 
     scaler = preprocessing.StandardScaler()  # normalize the data
     X_train_scaled = scaler.fit_transform(X_train)
