@@ -43,7 +43,7 @@ if __name__ == "__main__":
     TH1_DN = "../OOT/S1_DN_OOT_ONLY.xlsx"
     TH2 = "../OOT/S2_OOT_ONLY.xlsx"
 
-    data, data_just_signal = read_pandas(S1_DN)
+    data, data_just_signal = read_pandas(S1)
     mean, std = mean_and_std(data_just_signal)
     rmsvalues = pd.Series([RMS(e[1]) for e in data_just_signal.iterrows()])
 
@@ -51,6 +51,23 @@ if __name__ == "__main__":
     plt.title("mean")                       #MEAN
     plt.scatter(x, mean)
     plt.savefig("Data_Visualization_plots/Statistical_approach/Mean_S1_w.o_OTT.png", dpi=500)
+
+    scatter_x = np.array(x)
+    scatter_y = np.array(mean)
+    group = np.array(data.iloc[:, 0])
+    cdict = {0: 'green', 1: 'red'}
+    fig, ax = plt.subplots()
+    for g in np.unique(group):
+        ix = np.where(group == g)
+        ax.scatter(scatter_x[ix], scatter_y[ix], c=cdict[g], label=g, s=10)
+    plt.axvline(x=200, color='black')
+    plt.axvline(x=401, color='black')
+    plt.axvline(x=720, color='black')
+    plt.axvline(x=835, color='black')
+    plt.axvline(x=958, color='black')
+    ax.legend()
+    plt.title("mean")
+    plt.savefig("Data_Visualization_plots/Statistical_approach/mean_S1_w.o_OTT_JAN.png", dpi=500)
 
     plt.figure()
     plt.title("std")                        #STD
@@ -75,6 +92,7 @@ if __name__ == "__main__":
     ax.legend()
     plt.title("std")
     plt.savefig("Data_Visualization_plots/Statistical_approach/Std_S1_w.o_OTT_JAN.png", dpi=500)
+
 
 
 
