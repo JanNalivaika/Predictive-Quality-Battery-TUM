@@ -1,0 +1,59 @@
+\documentclass[]{report}
+% !TeX spellcheck = en_USA
+\usepackage[english]{babel}
+\usepackage{biblatex}
+\addbibresource{sample.bib}
+
+
+% Title Page
+\title{Artificial Intelligence in Production Engineering   \linebreak \linebreak Group Geport \linebreak Group: Predictive Quality Battery}
+
+
+
+\author{ LastName1, FirstName1\\
+	\texttt{first1.last1@xxxxx.com}
+	\and
+	LastName2, FirstName2\\
+	\texttt{first2.last2@xxxxx.com}
+	\and
+	LastName1, FirstName1\\
+	\texttt{first1.last1@xxxxx.com}
+	\and
+	LastName2, FirstName2\\
+	\texttt{first2.last2@xxxxx.com}
+	\and
+	LastName2, FirstName2\\
+	\texttt{first2.last2@xxxxx.com}
+}
+
+
+\begin{document}
+\maketitle
+\begin{abstract}
+\end{abstract}
+
+\tableofcontents
+\renewcommand{\thechapter}{\Roman{chapter}}
+\chapter{List Of Abbreviation}
+\chapter{List of Formula Symbols}
+
+\listoffigures
+\listoftables
+
+\setcounter{chapter}{0}
+\renewcommand{\thechapter}{\arabic{chapter}}
+\chapter{Introduction}
+\chapter{State of the Art}
+\chapter{Methodology}
+\chapter{Results}
+\chapter{Discussion}
+\chapter{Summary and Outlook}
+\chapter{Appendix}
+\printbibliography
+\renewcommand{\thechapter}{\Roman{chapter}}
+\setcounter{chapter}{2}
+\chapter{Contents of the project folder}
+\chapter{Eidesstattliche Erklärung}
+
+
+\end{document}          
