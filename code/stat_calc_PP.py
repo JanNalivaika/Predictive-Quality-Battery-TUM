@@ -3,6 +3,7 @@ from scipy.stats import pearsonr, spearmanr, entropy
 import pandas as pd
 import matplotlib.pyplot as plt
 import random as rd
+import ntpath
 
 def RMS(series: pd.DataFrame):
     rms = np.sqrt(np.sum(series**2)/len(series))
@@ -65,14 +66,49 @@ def plot_stats(paths, signal_names, labels, features):
                 plt.scatter(signal[feature], signal[label])
                 plt.savefig(signal_name + "_" + label + "_" + feature + ".png")
 
+def plot_stats2(paths, labels, features):
+    for i in range(len(paths)):
+        path = paths[i]
+        signal_name = ntpath.basename(path).split(".")[0]
+        signal = pd.read_excel(path)
+        for label in labels:
+            signal_0 = signal[signal[label] == 0]
+            signal_1 = signal[signal[label] == 1]
+            for feature in features:
+                plt.figure()
+                plt.scatter(signal_0.index, signal_0[feature], label=label + " == 0")
+                plt.scatter(signal_1.index, signal_1[feature], label=label + " == 1", c='r')
+                plt.xlabel("Sample")
+                plt.ylabel(feature)
+                plt.legend()
+                plt.savefig(signal_name + "_" + label + "_" + feature + ".png")
+
+def plot_stats3(paths, labels, feature1, feature2): # feature vs feature
+    for i in range(len(paths)):
+        path = paths[i]
+        signal_name = ntpath.basename(path).split(".")[0]
+        signal = pd.read_excel(path)
+        for label in labels:
+            signal_0 = signal[signal[label] == 0]
+            signal_1 = signal[signal[label] == 1]
+            plt.figure()
+            plt.scatter(signal_0[feature1], signal_0[feature2], label=label + " == 0")
+            plt.scatter(signal_1[feature1], signal_1[feature2], label=label + " == 1", c='r')
+            plt.xlabel(feature1)
+            plt.ylabel(feature2)
+            plt.legend()
+            plt.savefig(signal_name + "_" + feature1 + "_" + feature2 + ".png")
 
 if __name__ == "__main__":
     #calc_stats()
-    signal_names = ["S1_S2"]
-    paths = ["../Data/Statistical_features/S1_S2_corr.xlsx"]
-    labels = ["not OK", "signal", "WD40", "Gleitmo", "Lube"]
-    features = ["Pearson", "Spearman"]
+    #signal_names = ["S1_S2"]
+    paths = ["../Data/Statistical_features/S1_stats.xlsx", "../Data/Statistical_features/S1_DN_stats.xlsx", "../Data/Statistical_features/S2_stats.xlsx"]
+    labels = ["not OK", "Lube", "Gleitmo"]
+    #features = ["Pearson", "Spearman"]
+    features = ['STD', 'MAX', 'MIN']
     #plot_stats(paths, signal_names, labels, features)
+    #plot_stats2(paths, labels, features)
+    plot_stats3(paths, labels, 'MEAN', 'STD')
 
     #df_corr = pd.read_excel("../Data/Statistical_features/S1_S2_corr.xlsx")
     #plt.figure()
