@@ -1,5 +1,6 @@
 import random
 import numpy as np
+import pandas as pd
 import torch
 import torch.nn as nn
 from torch.nn import Sequential, Linear, ReLU, MSELoss, L1Loss, CrossEntropyLoss, NLLLoss, Sigmoid
@@ -8,13 +9,20 @@ from torch import from_numpy, no_grad, argmax
 from torch.utils.data import DataLoader, TensorDataset, random_split
 from sklearn import preprocessing  #
 from sklearn.model_selection import train_test_split
-from visualize_test import importData
 import matplotlib
 import matplotlib.pyplot as plt
 import warnings
 
 warnings.filterwarnings("ignore", category=UserWarning)
 
+def importSignal(datafile):
+    df = pd.read_excel(io=datafile)
+    signal1 = df.loc[:, 'Signal1_  1':'Signal1_112']
+    ok_label = df.loc[:, 'not OK']
+    signal1 = np.asarray(signal1)
+    ok_label = np.asarray(ok_label)
+
+    return signal1, ok_label
 
 class NNClassifier(nn.Module):
     def __init__(self, num_hidden_layers, num_neurons):
@@ -83,34 +91,20 @@ class NNClassifier(nn.Module):
 
 def main(num_hidden_layers, num_neurons):
     torch.manual_seed(123)
-    BATCH_SIZE = 64
-    EPOCHS_ADAM = 10
+    BATCH_SIZE = 128
+    EPOCHS_ADAM = 12
     EPOCH_LBFGS = 0
-    LEARNING_RATE = 0.0001
+    LEARNING_RATE = 0.001
 
     datafile = "../Data/S1.xlsx"
-    data = importData(datafile)
-
-    signal = data[:, 3:]  # rows = samples, col. = features
-
-    nok = data[:, 0]  # 1 = not ok, 0 = ok
-    WD_40 = data[:, 1]  # 1 = WD-40, 0 = no WD-40
-    Gleitmo = data[:, 2]  # 1 = Gleitmo, 0 = no gleitmo
-    lubericant = WD_40 + Gleitmo
-    ### determine input ###
-    X = signal
-    # combined = np.concatenate((signal1, signal2, signal1_DN), axis=1)
-    y = nok
-    #y = WD_40
-    #y = Gleitmo
-    # y = lubericant
-
-    # BATCH_SIZE = int(data.shape[0]/10) #size of the batches the data is split up into
-    # print('Data Size:', data.shape[0], 'Batch Size:', BATCH_SIZE)
+    signal, nok = importSignal(datafile)
 
     # histogramm of the labels
     # plt.hist(y, 2)
     # plt.show()
+
+    X = signal
+    y = nok
 
 
     ## split dataset into train, validation, test
@@ -185,8 +179,8 @@ def main(num_hidden_layers, num_neurons):
                 val_acc += (argmax(predictions, -1) == true_output).sum()
         standard_model.train()
 
-        #print(["Epoch: %d, Training accuracy: %3.4f, Validation accuracy: %3.4f" % (
-            #epoch + 1, train_acc * 100 / len(dl_train.dataset), val_acc * 100 / len(dl_val.dataset))])
+        print(["Epoch: %d, Training accuracy: %3.4f, Validation accuracy: %3.4f" % (
+            epoch + 1, train_acc * 100 / len(dl_train.dataset), val_acc * 100 / len(dl_val.dataset))])
 
 
     torch.save(standard_model.state_dict(), "my_classification_model.pt")
@@ -204,9 +198,10 @@ def main(num_hidden_layers, num_neurons):
             epoch_loss += float(loss.detach())
             test_acc += (argmax(logits, -1) == labels).sum()
 
-        print(["Test accuracy: %3.4f, epoch loss: %3.4f" % (test_acc * 100 / len(dl_test.dataset), epoch_loss)])
+        print(["Test accuracy: %3.4f" % (test_acc * 100 / len(dl_test.dataset))])
+        test_acc_return = test_acc * 100 / len(dl_test.dataset)
 
-    return test_acc
+    return test_acc_return
 
 
 if __name__ == "__main__":
