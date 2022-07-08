@@ -17,10 +17,11 @@ warnings.filterwarnings("ignore", category=UserWarning)
 
 def importSignal(datafile):
     df = pd.read_excel(io=datafile)
-    signal1 = df.loc[:, 'Signal1_  1':'Signal1_112']
     ok_label = df.loc[:, 'not OK']
-    signal1 = np.asarray(signal1)
     ok_label = np.asarray(ok_label)
+
+    df_just_signal = df.drop(['not OK', 'WD40', 'Gleitmo'], axis=1)
+    signal1 = np.asarray(df_just_signal)
 
     return signal1, ok_label
 
@@ -89,14 +90,14 @@ class NNClassifier(nn.Module):
         return x
 
 
-def main(num_hidden_layers, num_neurons):
+def main(num_hidden_layers=2, num_neurons=15):
     torch.manual_seed(123)
     BATCH_SIZE = 128
     EPOCHS_ADAM = 12
     EPOCH_LBFGS = 0
     LEARNING_RATE = 0.001
 
-    datafile = "../Data/S1.xlsx"
+    datafile = "../Data/S1_DN.xlsx"
     signal, nok = importSignal(datafile)
 
     # histogramm of the labels
@@ -179,8 +180,8 @@ def main(num_hidden_layers, num_neurons):
                 val_acc += (argmax(predictions, -1) == true_output).sum()
         standard_model.train()
 
-        print(["Epoch: %d, Training accuracy: %3.4f, Validation accuracy: %3.4f" % (
-            epoch + 1, train_acc * 100 / len(dl_train.dataset), val_acc * 100 / len(dl_val.dataset))])
+        #print(["Epoch: %d, Training accuracy: %3.4f, Validation accuracy: %3.4f" % (
+            #epoch + 1, train_acc * 100 / len(dl_train.dataset), val_acc * 100 / len(dl_val.dataset))])
 
 
     torch.save(standard_model.state_dict(), "my_classification_model.pt")
@@ -197,6 +198,7 @@ def main(num_hidden_layers, num_neurons):
 
             epoch_loss += float(loss.detach())
             test_acc += (argmax(logits, -1) == labels).sum()
+            #print(logits.shape)
 
         print(["Test accuracy: %3.4f" % (test_acc * 100 / len(dl_test.dataset))])
         test_acc_return = test_acc * 100 / len(dl_test.dataset)
