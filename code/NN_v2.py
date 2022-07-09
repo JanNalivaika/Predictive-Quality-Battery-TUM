@@ -90,14 +90,14 @@ class NNClassifier(nn.Module):
         return x
 
 
-def main(num_hidden_layers=2, num_neurons=15):
+def main(num_hidden_layers, num_neurons):
     torch.manual_seed(123)
     BATCH_SIZE = 128
-    EPOCHS_ADAM = 12
+    EPOCHS_ADAM = 22
     EPOCH_LBFGS = 0
     LEARNING_RATE = 0.001
 
-    datafile = "../Data/S1_DN.xlsx"
+    datafile = "../Data/S1.xlsx"
     signal, nok = importSignal(datafile)
 
     # histogramm of the labels
