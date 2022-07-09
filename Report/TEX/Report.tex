@@ -1,40 +1,70 @@
-\documentclass[]{report}
+\documentclass[12pt]{report}
 % !TeX spellcheck = en_USA
+
+\usepackage{amssymb}
+\usepackage{amsmath}
 \usepackage[english]{babel}
 \usepackage{biblatex}
 \addbibresource{sample.bib}
+\usepackage{titlesec}
 
-
-% Title Page
-\title{Artificial Intelligence in Production Engineering   \linebreak \linebreak Group Geport \linebreak Group: Predictive Quality Battery}
-
-
-
-\author{ LastName1, FirstName1\\
-	\texttt{first1.last1@xxxxx.com}
-	\and
-	LastName2, FirstName2\\
-	\texttt{first2.last2@xxxxx.com}
-	\and
-	LastName1, FirstName1\\
-	\texttt{first1.last1@xxxxx.com}
-	\and
-	LastName2, FirstName2\\
-	\texttt{first2.last2@xxxxx.com}
-	\and
-	LastName2, FirstName2\\
-	\texttt{first2.last2@xxxxx.com}
+\usepackage{geometry}
+\geometry{
+	a4paper,
+	total={170mm,257mm},
+	left=30mm,
+	right=30mm,
+	top=30mm,
+	bottom=30mm
 }
 
+% Title Page
+%\renewcommand{\maketitlehookd}{\centering\vfill\includegraphics{IMGs/Download.jpg}\vfill}
+
+\title{Artificial Intelligence in Production Engineering \linebreak \linebreak Group Report \linebreak Group: Predictive Quality Battery}
+
+
+
+\author{Nalivaika, Jan\\
+	\texttt{03694590}\\
+	\texttt{nalivaika@outlook.de}
+	\and
+	Paździerkiewicz, Przemyslaw\\
+	\texttt{03718188}\\
+	\texttt{p.pazdzierkiewicz@tum.de}
+	\and
+	Pielmeier, Sebastian\\
+	\texttt{03693728}\\
+	\texttt{pielmeier.sebastian@t-online.de}
+	\and
+	Tcvetkov, Nikita\\
+	\texttt{03689859}\\
+	\texttt{nikita.tcvetkov@tum.de}
+	\and
+	Wittner, Simon\\
+	\texttt{03696129}\\
+	\texttt{simon.wittner@gmx.net}
+}
+
+
+\date{21.07.2022}
+
+
+%\titleformat{\chapter}[display]   
+%{\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\Huge}   
+%\titlespacing*{\chapter}{0pt}{-60pt}{30pt}
 
 \begin{document}
 \maketitle
 \begin{abstract}
+	Do the other fings first, then compile abstract
 \end{abstract}
 
 \tableofcontents
 \renewcommand{\thechapter}{\Roman{chapter}}
 \chapter{List Of Abbreviation}
+NN = Neural Net \newline
+ML = Machine Learning 
 \chapter{List of Formula Symbols}
 
 \listoffigures
@@ -43,11 +73,177 @@
 \setcounter{chapter}{0}
 \renewcommand{\thechapter}{\arabic{chapter}}
 \chapter{Introduction}
-\chapter{State of the Art}
+%wow das ist soooo cool
+%Why is this topic dealt with? Can you motivate your topic by a business case?
+%Introducing the reader to the topic
+%The reader should understand the general topic and the motivation.
+
+Operating profitably in the current market, requires the capability to adapt to increasingly individualized customer demands, strict adherence to deadlines, and expected quality requirements. Failure to provide the requested services on time or with unacceptable quality deficit will result in a loss of business and lead to being squeezed out of the market.
+\newline
+In the current state of “Industrie 4.0” and Big-Data, multiple opportunities arise to improve speed and accuracy in the production environment. Adaptive process scheduling, for example, can lead to optimal usage of machinery and adherence to the production schedule. Both of those effects will benefit the costumer, as the product will be manufactured faster and cheaper. When it comes to creating a product for the customer, the production part is only one of the aspects, where the new application possibilities of data-driven algorithms can support the manufacturer. Data-driven algorithms can support the designer to conceptualize more effective mechanisms or help the machinist to react to changing machining parameters, like wear and tear on cutting tools.
+Quality control is one of the sections of the production chain where those algorithms can support the identification of rejects or suggest improvements for the production process. The significant advancements in computer science, especially in Machine Learning (ML), can be adapted and transformed to the specific needs of the quality control department, to achieve higher precision rate and efficiency in identifying faults in the final product, than could be done with human labor.
+\newline
+Machine learning contains those algorithms that are capable of solving tasks without explicitly being programmed to do so. They are based on pattern recognition and their performance improves as more data is available. This property proves them advantageous as more and more data is available from the increasingly digitized production environment. One of the commonly used algorithms in ML are Neural Networks (NNs), which find use in Supervised Learning, Unsupervised Learning and Reinforcement Learning. The main advantage of NNs is that they can be deployed in a multitude of ways, specifically optimized for their intended use cases.
+\newpage
+This report will provide an exemplary use-case for classifying welds in the domain of laser beam welding. This process can easily be applied to any other classification problem just by adapting a few variables. From a given set of data, multiple preprocessing and feature extraction steps are performed. This procedure follows the general KDD-process (Knowledge Discovery in Databases).
+The found features serve as decision bases for the algorithms to classify the welds as “OK” and “not OK”. 
+
+
+\chapter{State of the Art and business case}
+wer hat schon was gemacht paper 
 \chapter{Methodology}
+KDD process erklären
+
+sort steps to KDD
+
+
+
+
+
+
+\section{Dataset}
+
+idententical distribution of ok/NOK/WD40/Gleitmo
+
+Two data sets were obtained using two different
+photodiode-based sensors which recorded the back reflected laser radiation
+during laser beam welding to detect process defects, such as spatters, pol-
+lution, or holes at the weld seam´s surface.
+
+For the labeling of the measured signals (also called time series) an automated algorithm was used, see Fig-
+ure XXX, and the signal was divided into five parts.
+
+If Threshold violation, no furthe anaylis
+Application of a wavelet-based denoising algorithm Subdevision and recaling 
+wavelet based automatred labelling of data  
+
+laser power was kept constant 
+feed rate was varied in a certain parameter range
+
+Content of dataset:
+Table 
+“not OK”
+For a “1”, the weld seam is not OK.
+“signal”
+For a “1”, the signal exceeds a certain threshold. The threshold
+is the same for the entire data set.
+WD40
+For a “1”, the surface between the stripe and sheet was pol-
+luted with the lubricant WD40.
+Gleitmo
+For a “1”, the surface between the stripe and sheet was pol-
+luted with the lubricant Gleitmo.
+LWMID1
+The LWMID1 is a sequential number and is unique for each
+weld seam
+LWMID2
+The LWMID2 indicates a certain part of a weld seam
+(LWMID1) and has a range from 1 (beginning) to 5 (end)
+Signal11 – 112
+Each column contains a normalized raw value of the signal for
+sensor 1.
+Signal1dn1 – 112
+Each column contains a normalized raw value of the signal
+with a noise reduction for sensor 1.
+Signal21 – 112
+Each column contains a normalized raw value of the signal for
+sensor 2.
+
+
+\section{Goal}
+The main two objectives are:
+1. Determining possible correlations between the measurements of
+sensor 1 and 2
+
+Due to the superimposition of many effects that occur highly dynamic and
+cannot be observed separately, the signals contain anomalies related to
+process instabilities and are included in different frequency spectrums.
+Based on the data sets, the weld seams shall be classified in the first group
+in the following three categories:
+OK
+Not OK
+Signal value exceeded
+
+
+As a second group, the weld seams need to be classified to one of the fol-
+lowing categories (only one of the two alternatives):
+Alternative 1:
+Lubricant
+No lubricant
+
+
+
+\section{devision und cleasing of dataset}
+\section{Possebilities for Dataminig}
+How can you deal with a small data set? Are there methods to extend the
+data set? Are there methods to artificially generate time series data?
+\section{Statictical Featurtes}
+How can the measurement signal be suitably pre-processed?
+How can process instabilities be detected?
+\begin{itemize}
+	\item min
+	\item max
+	\item Mean
+	\item Median
+	\item 0,25 perzentil
+	\item 0,75 perzentil
+	\item STD
+	\item SKewness 
+	\item Kurosis 
+	\item Sample Varianz
+	\item Entropy
+	\item RMS
+\end{itemize}
+\section{FFT}
+\section{Wavelet}
+\section{Posiible Classification Models} 
+NN
+LOG REG
+LS
+baeysian regression
+Gradientren Boosting
+
+\section{Preparation of the NN}
+For the training of a classification model, the signals as well as features (e.g.
+the frequency) can be used as input. Based on a test dataset, the trained
+classification model should be used to determine the weld seam quality be-
+longing to one category of each of the two groups listed above.
+
+Do you have to conduct the train/test-split manually?
+What features are relevant and suitable for the training of the model?
+was haben wir als input benutzt
+
+\section{hyperparameter Tuning} 
 \chapter{Results}
+Clear presentation of the results
+Precise and meaningful labeling of illustrations and diagrams
+How good does the model perform on the test data? 
+
+crossvalidation
 \chapter{Discussion}
+Confusion Matrix
+unterscheidung von Gleitmittel?
+
+What are levers to increase the model performance? Is hyper-parameter tuning possible and
+sensible? Is your model sensitive to random seeds and train/test-splits?
+How robust is the model when reducing the number of training observa-
+tions?
+
+Core of the report???
+Interpretation and evaluation of the results
+Direct references to the results of the previous section
+
+How can the results be interpreted, what are the consequences and
+limitations?
+
+
 \chapter{Summary and Outlook}
+If you had more time, what would your next steps be? How applicable
+is your model in real-world use cases?
+
+Indicate the key findings you had and the future research you would
+conduct if you had more time
+
 \chapter{Appendix}
 \printbibliography
 \renewcommand{\thechapter}{\Roman{chapter}}
