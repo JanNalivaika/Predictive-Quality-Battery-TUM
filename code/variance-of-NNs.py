@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 num_hidden_layers: maximale anzahl der betrachteten hidden layer
 num_neurons: maximale anzahl der betrachteten knoten
 step_neurons: schrittweite der betrachteten kotenzahl
-
+#
 Für alle kombinationen wird der Mittelwert der Test Accuracy und die Varianz gespeichert
 """
 
