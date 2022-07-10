@@ -90,14 +90,15 @@ class NNClassifier(nn.Module):
         return x
 
 
-def main(num_hidden_layers, num_neurons):
+def main(num_hidden_layers=2, num_neurons=30):
     torch.manual_seed(123)
     BATCH_SIZE = 128
     EPOCHS_ADAM = 22
     EPOCH_LBFGS = 0
     LEARNING_RATE = 0.001
 
-    datafile = "../Data/S1.xlsx"
+    #datafile = "../Data/S1.xlsx"
+    datafile = "../S1_DN_relabeled.xlsx"
     signal, nok = importSignal(datafile)
 
     # histogramm of the labels
@@ -191,6 +192,8 @@ def main(num_hidden_layers, num_neurons):
         standard_model.eval()
         epoch_loss = 0.0
         test_acc = 0
+        false_positive = 0
+        false_negative = 0
         for inputs, labels in dl_test:
             logits = standard_model(inputs)
             labels_to = labels.type(torch.LongTensor)
@@ -198,9 +201,14 @@ def main(num_hidden_layers, num_neurons):
 
             epoch_loss += float(loss.detach())
             test_acc += (argmax(logits, -1) == labels).sum()
+            false_negative += (argmax(logits, -1) > labels).sum()
+            false_positive += (argmax(logits, -1) < labels).sum() # y_i = 1 -> teil ist nok, logits (=prediction) = 0 = teil ist ok
             #print(logits.shape)
 
+
         print(["Test accuracy: %3.4f" % (test_acc * 100 / len(dl_test.dataset))])
+        print(["Test false negatives: %3.4f" % (false_negative * 100 / len(dl_test.dataset))])
+        print(["Test false positives: %3.4f" % (false_positive * 100 / len(dl_test.dataset))])
         test_acc_return = test_acc * 100 / len(dl_test.dataset)
 
     return test_acc_return
