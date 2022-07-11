@@ -1,0 +1,22 @@
+\babel@toc {english}{}\relax 
+\contentsline {chapter}{\numberline {I}List Of Abbreviation}{2}{}%
+\contentsline {chapter}{\numberline {II}List of Formula Symbols}{3}{}%
+\contentsline {chapter}{\numberline {1}Introduction}{6}{}%
+\contentsline {chapter}{\numberline {2}State of the Art and business case}{8}{}%
+\contentsline {chapter}{\numberline {3}Methodology}{9}{}%
+\contentsline {section}{\numberline {3.1}Dataset}{9}{}%
+\contentsline {section}{\numberline {3.2}Goal}{9}{}%
+\contentsline {section}{\numberline {3.3}devision und cleasing of dataset}{10}{}%
+\contentsline {section}{\numberline {3.4}Possebilities for Dataminig}{10}{}%
+\contentsline {section}{\numberline {3.5}Statictical Featurtes}{10}{}%
+\contentsline {section}{\numberline {3.6}FFT}{10}{}%
+\contentsline {section}{\numberline {3.7}Wavelet}{10}{}%
+\contentsline {section}{\numberline {3.8}Posiible Classification Models}{10}{}%
+\contentsline {section}{\numberline {3.9}Preparation of the NN}{11}{}%
+\contentsline {section}{\numberline {3.10}hyperparameter Tuning}{11}{}%
+\contentsline {chapter}{\numberline {4}Results}{12}{}%
+\contentsline {chapter}{\numberline {5}Discussion}{13}{}%
+\contentsline {chapter}{\numberline {6}Summary and Outlook}{14}{}%
+\contentsline {chapter}{\numberline {7}Appendix}{15}{}%
+\contentsline {chapter}{\numberline {III}Contents of the project folder}{16}{}%
+\contentsline {chapter}{\numberline {IV}Eidesstattliche Erklärung}{17}{}%
