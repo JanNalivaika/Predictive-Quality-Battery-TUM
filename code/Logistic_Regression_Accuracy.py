@@ -36,7 +36,7 @@ def importStatFeatures(datafile):
 
     WD40 = np.asarray(WD40)
     Gleitmo = np.asarray(Gleitmo)
-    Lubricant = np.round(WD40 + Gleitmo)
+    Lubricant = WD40 + Gleitmo
 
     return nok, signal_std, WD40, Gleitmo, Lubricant
 
