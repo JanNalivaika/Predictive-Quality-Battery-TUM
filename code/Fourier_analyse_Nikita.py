@@ -48,7 +48,7 @@ def fourier(s1,s1DN, s2, s1_sample2):
 
     yf_1 = scipy.fftpack.fft(s1)
     #print(yf_1)
-    #yf_1DN = scipy.fftpack.fft(s1DN)
+    yf_1DN = scipy.fftpack.fft(s1DN)
     #yf_2 = scipy.fftpack.fft(s2)
     yf_1_sample2 = scipy.fftpack.fft(s1_sample2)
     #test = scipy.fftpack.fft(y)
@@ -62,29 +62,36 @@ def fourier(s1,s1DN, s2, s1_sample2):
     fig, ax = plt.subplots()
     ax.plot(xf, 2.0 / N * np.abs(yf_1[:N // 2]), label="Sample WD 40")
 
-    ax.plot(xf, 2.0 / N * np.abs(yf_1_sample2[:N // 2]), label="Sample Gleitmo")
+    ax.plot(xf, 2.0 / N * np.abs(yf_1DN[:N // 2]), label="Sample Gleitmo")
 
-    #ax.plot(xf, 2.0 / N * np.abs(yf_1DN[:N // 2]), label="S1DN")
-    #ax.plot(xf, 2.0 / N * np.abs(yf_2[:N // 2]), label="S2")
-    #delme1 = 2.0 / N * np.abs(yf_1[:N // 2])
-    #delme2 = 2.0 / N * np.abs(yf_2[:N // 2])
-    #r = np.corrcoef(delme1, delme2)
-    #ax.plot(xf, 2.0 / N * np.abs(yf_1DN_self[:N // 2]), label="S1DN_self")
-    #ax.plot(xf, 2.0 / N * np.abs(test[:N // 2]), label="S1DN_self")
+    #ax.plot(xf, 2.0 / N * np.abs(yf_1[:N // 2]), label="Signal 1")
+
+    #ax.plot(xf, 2.0 / N * np.abs(yf_1DN[:N // 2]), label="Signal 1 DN")
+
+
     plt.legend()
-    #n_sample = selector(data, i)[4]
-    #sample2_NOK = data[(selector(data)[4] + 200), 0]
-    #sample1_NOK = data[selector(data)[4], 0]
+
     n_sample = i + 1
-    sample2_NOK = data[(i + 200), 0]
+    sample2_NOK = data[(i + 200), 0]                                                                          #Variante 1 (WD 40 Gleitmo OK NOT OK Vergleich)
     sample1_NOK = data[i, 0]
     print(data[i + 200, 4], data[i +200 , 5])
     plt.title("Sample " + str(n_sample) + " NOK = " + str(int(sample1_NOK)) + " and " + str(n_sample + 200) + " NOK = " + str(int(sample2_NOK)))
-    fig_name = str("../DataCorrelation/Fourier" + str(i + 1) + ".png")
+    fig_name = str("../Data/code_for_visualizations/Data_Visualization_plots/Fourier" + str(i + 1) + ".png")
     plt.savefig(fig_name, dpi=500)
     plt.show()
     plt.close()
 
+
+    # n_sample = i + 1
+    # sample2_NOK = data[(i + 200), 0]
+    # sample1_NOK = data[i, 0]                                                                                        #Variante 2 (Vergleich 1 and 1DN)
+    # print(data[i + 200, 4], data[i + 200, 5])
+    # plt.title(
+    #     "Sample " + str(n_sample))
+    # fig_name = str("../Data/code_for_visualizations/Data_Visualization_plots/Fourier" + str(i + 1) + ".png")
+    # plt.savefig(fig_name, dpi=500)
+    # plt.show()
+    # plt.close()
 
 
 
@@ -94,6 +101,7 @@ if __name__ == "__main__":
     data = importData(datafile)
     for i in range(0, 10):
         s1 , s1DN, s2, s1_sample2 = selector(data, i)[0:4]
+        print(s1)
         fourier(s1,s1DN, s2, s1_sample2)
     pass
 

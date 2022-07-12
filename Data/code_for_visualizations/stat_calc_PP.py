@@ -14,23 +14,25 @@ def filter_OOT(df: pd.DataFrame):
     return df
 
 def calc_stats():
-    df1 = pd.read_excel("../Data/Statistical_features/All_Data_stats.xlsx", sheet_name="S1")
-    labels = df1.loc[:, "not OK":"LWMID_2"]
+    df_all = pd.read_excel("../All/All_Data_relabeled.xlsx")
+    df_all = filter_OOT(df_all)
+    labels = df_all.loc[:, "not OK":"LWMID_2"]
     labels.insert(4, "Lube", ((labels["WD40"] == 1) | (labels["Gleitmo"] == 1)).astype(int))
-    df1 = df1.loc[:, "Signal1_  1":"Signal1_112"]
+
+    df1 = df_all.loc[:, "Signal1_  1":"Signal1_112"]
     df1.columns = range(112)
 
-    df1_dn = pd.read_excel("../Data/Statistical_features/All_Data_stats.xlsx", sheet_name="S1_DN")
-    df1_dn = df1_dn.loc[:, "Signal1_dn_  1":"Signal1_dn_112"]
+    # df1_dn = pd.read_excel("../Data/Statistical_features/All_Data_stats.xlsx", sheet_name="S1_DN")
+    df1_dn = df_all.loc[:, "Signal1_dn_  1":"Signal1_dn_112"]
     df1_dn.columns = range(112)
 
-    df2 = pd.read_excel("../Data/Statistical_features/All_Data_stats.xlsx", sheet_name="S2")
-    df2 = df2.loc[:, "Singal2_  1":"Singal2_112"]
+    # df2 = pd.read_excel("../Data/Statistical_features/All_Data_stats.xlsx", sheet_name="S2")
+    df2 = df_all.loc[:, "Singal2_  1":"Singal2_112"]
     df2.columns = range(112)
 
-    df_corr = labels.copy(deep=True)
-    df_corr["Pearson"] = df1.corrwith(df2, axis=1, method='pearson')
-    df_corr["Spearman"] = df1.corrwith(df2, axis=1, method='spearman')
+    # df_corr = labels.copy(deep=True)
+    # df_corr["Pearson"] = df1.corrwith(df2, axis=1, method='pearson')
+    # df_corr["Spearman"] = df1.corrwith(df2, axis=1, method='spearman')
     #print(df_corr)
     #df_corr.to_excel("../Data/Statistical_features/S1_S2_corr.xlsx", index=False)
 
@@ -52,7 +54,7 @@ def calc_stats():
         df_stat['RMS'] = (df.pow(2, axis=1).sum(axis=1) / df.shape[1]).apply(np.sqrt, axis=1)
         df_stat['ENTROPY'] = df.apply(entropy, axis=1)
         #print(df_stat)
-        #df_stat.to_excel("../Data/Statistical_features/" + df_names[i] + "_stats.xlsx", index=False)
+        df_stat.to_excel("../Statistical_features/" + df_names[i] + "_relabeled_filtered_stats.xlsx", index=False)
         pass
 
 def plot_stats(paths, signal_names, labels, features):
@@ -69,7 +71,9 @@ def plot_stats(paths, signal_names, labels, features):
 def plot_stats2(paths, labels, features):
     for i in range(len(paths)):
         path = paths[i]
-        signal_name = ntpath.basename(path).split(".")[0]
+        title = ntpath.basename(path).split(".")[0].split("_")
+        if title[1] == "DN": signal_name = title[0] + " " + title[1]
+        else: signal_name = title[0]
         signal = pd.read_excel(path)
         for label in labels:
             signal_0 = signal[signal[label] == 0]
@@ -80,13 +84,14 @@ def plot_stats2(paths, labels, features):
                 plt.scatter(signal_1.index, signal_1[feature], label=label + " == 1", c='r')
                 plt.xlabel("Sample")
                 plt.ylabel(feature)
+                plt.title(signal_name + " " + feature)
                 plt.legend()
-                plt.savefig(signal_name + "_" + label + "_" + feature + ".png")
+                plt.savefig(signal_name + "_" + label + "_" + feature + "_relabeled.png")
 
 def plot_stats3(paths, labels, feature1, feature2): # feature vs feature
     for i in range(len(paths)):
         path = paths[i]
-        signal_name = ntpath.basename(path).split(".")[0]
+        signal_name = ntpath.basename(path).split(".")[0].split("_")[0]
         signal = pd.read_excel(path)
         for label in labels:
             signal_0 = signal[signal[label] == 0]
@@ -94,21 +99,41 @@ def plot_stats3(paths, labels, feature1, feature2): # feature vs feature
             plt.figure()
             plt.scatter(signal_0[feature1], signal_0[feature2], label=label + " == 0")
             plt.scatter(signal_1[feature1], signal_1[feature2], label=label + " == 1", c='r')
+
+            # plt.axvline(x=200, color='black')
+            # plt.axvline(x=401, color='black')
+            # plt.axvline(x=716, color='black')
+            # plt.axvline(x=826, color='black')
+            # plt.axvline(x=949, color='black')
+            # plt.axvline(x=1125, color='black')
+
             plt.xlabel(feature1)
             plt.ylabel(feature2)
             plt.legend()
             plt.savefig(signal_name + "_" + feature1 + "_" + feature2 + ".png")
 
 if __name__ == "__main__":
-    #calc_stats()
+    # calc_stats()
     #signal_names = ["S1_S2"]
-    paths = ["../Data/Statistical_features/S1_stats.xlsx", "../Data/Statistical_features/S1_DN_stats.xlsx", "../Data/Statistical_features/S2_stats.xlsx"]
-    labels = ["not OK", "Lube", "Gleitmo"]
+    paths = [
+        "..\Statistical_features\S1_relabeled_filtered_stats.xlsx",
+        "..\Statistical_features\S1_DN_relabeled_filtered_stats.xlsx"
+        # "../Statistical_features/S2_stats.xlsx"
+        ]
+    labels = [
+        "not OK"
+        # "Lube"
+        # "Gleitmo"
+        ]
     #features = ["Pearson", "Spearman"]
-    features = ['STD', 'MAX', 'MIN']
+    features = [
+        'MEAN',
+        'STD',
+        'MAX'
+        ]
     #plot_stats(paths, signal_names, labels, features)
-    #plot_stats2(paths, labels, features)
-    plot_stats3(paths, labels, 'MEAN', 'STD')
+    plot_stats2(paths, labels, features)
+    #plot_stats3(paths, labels, 'MEAN', 'STD')
 
     #df_corr = pd.read_excel("../Data/Statistical_features/S1_S2_corr.xlsx")
     #plt.figure()
