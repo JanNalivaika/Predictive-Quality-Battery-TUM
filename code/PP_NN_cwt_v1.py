@@ -19,16 +19,16 @@ warnings.filterwarnings("ignore", category=UserWarning)
 class NeuralNet(nn.Module):
     def __init__(self, input_size):
         super().__init__()
-        self.classifier = nn.Sequential(nn.Linear(input_size, 256), # hidden layer, nn.Linear(input_size, output_size)
-                                        nn.BatchNorm1d(256),        # normalization layer
+        self.classifier = nn.Sequential(nn.Linear(input_size, 111), # hidden layer, nn.Linear(input_size, output_size)
+                                        #nn.BatchNorm1d(111),        # normalization layer
                                         nn.ReLU(),                  # activation function ReLU
-                                        nn.Linear(256, 2),          # output layer
-                                        nn.BatchNorm1d(2),          # normalization layer
+                                        nn.Linear(111, 2),          # output layer
+                                        #nn.BatchNorm1d(2),          # normalization layer
                                         nn.LogSoftmax(dim=1))       # squeeze outputs to add up to 1, classification
         
     def forward(self, x):
         # make sure the input tensor is flattened in order to fit input_size
-        x = torch.flatten(x)
+        x = torch.transpose(x,0,1)
         x = self.classifier(x) # sequentially push input x throught the neural net
         return x
 
@@ -40,7 +40,7 @@ def main():
     EPOCHS = 10
     LEARNING_RATE = 0.001
 
-    model = NeuralNet(111 * SCALE_DIM)
+    model = NeuralNet(SCALE_DIM)
     criterion = nn.NLLLoss() # negative log likelihood loss for classification
     optimizer = optim.SGD(model.parameters(), lr=LEARNING_RATE) # standard stochastic gradient descnet algorithm
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu") # check whether GPU is available
@@ -57,8 +57,8 @@ def main():
 
     X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.20, random_state=42)
 
-    dl_train = DataLoader(TensorDataset(torch.tensor(X_train), torch.tensor(Y_train)), shuffle=True)
-    dl_test = DataLoader(TensorDataset(torch.tensor(X_test), torch.tensor(Y_test)), shuffle=True)
+    dl_train = DataLoader(TensorDataset(torch.tensor(X_train), torch.tensor(Y_train)), batch_size=111, shuffle=True)
+    dl_test = DataLoader(TensorDataset(torch.tensor(X_test), torch.tensor(Y_test)), batch_size=111, shuffle=True)
 
 
     for epoch in range(EPOCHS):

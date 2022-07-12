@@ -9,7 +9,7 @@ import pywt
 
 def cwt(signal, db_name):
 
-    rg_scales = 128  # arbitrary range, to be adjusted
+    rg_scales = 112  # arbitrary range, to be adjusted
     scales = range(1, rg_scales)
     wavelet = 'morl' # generic approach
 
@@ -23,13 +23,13 @@ def cwt(signal, db_name):
 
         coefs, freqs = pywt.cwt(signal[x], scales, wavelet)
         trafo[x] = np.transpose(coefs)
-
+    print(trafo.shape)
     np.save(db_name, trafo)
 
 
 if __name__ == "__main__":
-    db_name = "Signal2_cwt.npy"
-    datafile = "../Data/Datensatz_Batteriekontaktierung.xlsx"
+    db_name = "Signal1_DN_cwt_112.npy"
+    datafile = "../Data/All/All_data.xlsx"
     data = importData(datafile)
-    signal = data[:, 230:341]
+    signal = data[:, 118:229]
     cwt(signal, db_name)

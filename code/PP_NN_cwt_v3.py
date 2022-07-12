@@ -20,13 +20,14 @@ def cwt(signal):
     scales = range(1, rg_scales)
     wavelet = 'morl'
 
-    x_shape = tuple([len(signal), 111, 111])
+    x_shape = tuple([len(signal), rg_scales-1, 111])
 
     x_train = np.empty(x_shape)
 
     for x in range(len(signal)):
         coefs, freqs = pywt.cwt(signal[x], scales, wavelet)
-        x_train[x] = np.transpose(coefs)
+        # x_train[x] = np.transpose(coefs)
+        x_train[x] = coefs
 
     #print(x_train.shape)
     return x_train
