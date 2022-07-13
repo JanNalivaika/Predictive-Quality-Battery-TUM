@@ -52,10 +52,14 @@ class NNClassifier(nn.Module):
                     self.fc3 = nn.Linear(num_neurons, num_neurons)
                     if num_hidden_layers >= 4:
                         self.fc4 = nn.Linear(num_neurons, num_neurons)
-                        if num_hidden_layers == 5:
+                        if num_hidden_layers >= 5:
                             self.fc5 = nn.Linear(num_neurons, num_neurons)
-                            if num_hidden_layers > 5:
-                                print('number of hidden layers must be < 6')
+                            if num_hidden_layers >= 6:
+                                self.fc6 = nn.Linear(num_neurons, num_neurons)
+                                if num_hidden_layers >= 7:
+                                    self.fc7 = nn.Linear(num_neurons, num_neurons)
+                                    if num_hidden_layers > 8:
+                                        print('number of hidden layers must be < 8')
 
             self.fcOut = nn.Linear(num_neurons, num_of_classes)
 
@@ -76,10 +80,14 @@ class NNClassifier(nn.Module):
                         x = torch.tanh(self.fc3(x))
                         if self.num_hidden_layers >= 4:
                             x = torch.tanh(self.fc4(x))
-                            if self.num_hidden_layers == 5:
+                            if self.num_hidden_layers >= 5:
                                 x = torch.tanh(self.fc5(x))
-                                if self.num_hidden_layers > 5:
-                                    print('number of hidden layers must be < 6')
+                                if self.num_hidden_layers >= 6:
+                                    x = torch.tanh(self.fc6(x))
+                                    if self.num_hidden_layers >= 7:
+                                        x = torch.tanh(self.fc7(x))
+                                        if self.num_hidden_layers > 8:
+                                            print('number of hidden layers must be < 8')
 
             x = torch.sigmoid(self.fcOut(x))
         else:
@@ -183,8 +191,10 @@ def main(num_hidden_layers, num_neurons, X_train, y_train, X_val, y_val):
         print(["Validation false negatives: %3.4f" % (false_negative * 100 / len(dl_val.dataset))])
         print(["Validation false positives: %3.4f" % (false_positive * 100 / len(dl_val.dataset))])
         val_acc_return = val_acc * 100 / len(dl_val.dataset)
+        false_negative_return = false_negative * 100 / len(dl_val.dataset)
+        false_positive_return = false_positive * 100 / len(dl_val.dataset)
 
-    return val_acc_return
+    return val_acc_return, false_negative_return, false_positive_return
 
 
 if __name__ == "__main__":

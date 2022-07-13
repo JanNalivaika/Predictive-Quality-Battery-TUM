@@ -26,18 +26,19 @@ def importSignal(datafile):
 
 
 
-num_hidden_layers = 6
+num_hidden_layers = 7
 num_neurons = 100
-step_neurons = 5
+step_neurons = 10
 num_iterations = 50
 
-hid_layers = np.arange(start=0, stop=num_hidden_layers+1, step = 1)
+hid_layers = np.arange(start=1, stop=num_hidden_layers+1, step = 1)
 neurons = np.arange(start=5, stop=num_neurons+1, step=step_neurons)
 
 x1 = hid_layers.size
 x2 = neurons.size
 x3 = 2
 mean_err = np.zeros((x1, x2, x3))
+fn_fp = np.zeros((x1, x2, x3))  #false negative, false positive
 
 #import data
 datafile = "../Data/S1_DN_relabeled.xlsx"
@@ -53,6 +54,8 @@ skf = StratifiedKFold(n_splits=num_splits, shuffle=True, random_state=42)
 
 
 temp_acc = np.zeros((num_splits))
+temp_fn = np.zeros((num_splits))
+temp_fp = np.zeros((num_splits))
 for l in range(0, hid_layers.size):
 
 
@@ -65,14 +68,17 @@ for l in range(0, hid_layers.size):
             X_train, X_test = X[train_index], X[test_index]
             y_train, y_test = y[train_index], y[test_index]
 
-            temp_acc[split_iteration] = mainKval(hid_layers[l], neurons[n], X_train, y_train, X_test, y_test)
+            temp_acc[split_iteration], temp_fn[split_iteration], temp_fp[split_iteration] = mainKval(hid_layers[l], neurons[n], X_train, y_train, X_test, y_test)
             print(temp_acc[split_iteration])
             split_iteration += 1
 
         mean_err[l, n, 0] = np.mean(temp_acc)
         mean_err[l, n, 1] = np.max(temp_acc) - np.mean(temp_acc)
+        fn_fp[l, n, 0] = np.mean(temp_fn)
+        fn_fp[l, n, 1] = np.mean(temp_fp)
 
 print(mean_err)
+print(fn_fp)
 
 for h in range(0, hid_layers.size):
     fig = plt.figure()
