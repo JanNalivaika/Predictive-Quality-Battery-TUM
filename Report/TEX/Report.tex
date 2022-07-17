@@ -1,12 +1,17 @@
 \documentclass[12pt]{report}
-% !TeX spellcheck = en_USA
+%!TeX spellcheck = en_USA
 
 \usepackage{amssymb}
 \usepackage{amsmath}
-\usepackage[english]{babel}
+
 \usepackage{biblatex}
 \addbibresource{sample.bib}
 \usepackage{titlesec}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{titling}
+\usepackage[english]{babel}
 
 \usepackage{geometry}
 \geometry{
@@ -21,7 +26,7 @@
 % Title Page
 %\renewcommand{\maketitlehookd}{\centering\vfill\includegraphics{IMGs/Download.jpg}\vfill}
 
-\title{Artificial Intelligence in Production Engineering \linebreak \linebreak Group Report \linebreak Group: Predictive Quality Battery}
+\title{\vspace*{-5cm}\includegraphics[width=15cm]{../img/deckblatt.jpg}\\Artificial Intelligence in Production Engineering \linebreak \linebreak Group Report \linebreak Group: Predictive Quality Battery}
 
 
 
@@ -54,24 +59,29 @@
 %{\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\Huge}   
 %\titlespacing*{\chapter}{0pt}{-60pt}{30pt}
 
+
 \begin{document}
+
 \maketitle
 \begin{abstract}
 	Do the other fings first, then compile abstract
 \end{abstract}
 
 \tableofcontents
-\renewcommand{\thechapter}{\Roman{chapter}}
-\chapter{List Of Abbreviation}
+%\renewcommand{\thechapter}{\Roman{chapter}}
+\chapter*{List Of Abbreviation}
 NN = Neural Net \newline
-ML = Machine Learning 
-\chapter{List of Formula Symbols}
+ML = Machine Learning \newline
+FFT = Fast Fourier Transformation\newline
+CWT = Continuous Wavelet Transform\newline
+STD = Standard Deviation \newline
+OOT = out of threshold\newline
+RMS = Root mean square\newline
+LBW = Lase Beam Welding\newline
+KDD = Knowledge Discovery in Databases\newline
 
 \listoffigures
-\listoftables
 
-\setcounter{chapter}{0}
-\renewcommand{\thechapter}{\arabic{chapter}}
 \chapter{Introduction}
 %wow das ist soooo cool
 %Why is this topic dealt with? Can you motivate your topic by a business case?
@@ -89,7 +99,7 @@ This report will provide an exemplary use-case for classifying welds in the doma
 The found features serve as decision bases for the algorithms to classify the welds as “OK” and “not OK”. 
 
 
-\chapter{State of the Art and business case}
+\chapter{Business Case}
 In more traditional welding operations, an electric arc is used to bind 2 metallic pieces by selectively melting the material on the two parts and letting it solidify afterwards. One of the disadvantages is that heat-spread during the welding process. Especially with highly conductive materials like copper. This is due to the relatively low power density in electronic arcs. To safely combine 2 materials, it can require a prolonged arc presence, that will heat up the entire parts. When it comes to welding overlapped sheets of material, it can happen that the upper sheet is already molten while the underlying material, due to its high thermal conductivity, is not. Additionally, it requires to have an electric circuit over the two parts to form the arc and start the welding process. This is a disadvantage when it comes to high volume welding operations as it has to be made sure that all connections are stable, and all current is flowing as intended every single time.
 The production of battery packs is one of the areas where these disadvantages of arc welding make it very difficult to have a safe and efficient welding process. The welding of the copper conductors to the batteries would require a prolonged heat input that would damage the battery-cells. Additionally, it is not beneficial to expose the batteries to high electrical currents of voltages.
 
@@ -98,135 +108,241 @@ Laser-Beam welding (LBW) is one method that can work with these specific boundar
 The power delivery is very high and leads to an almost instantaneous welding of both materials without conducting a lot of heat to the whole part. Besides that, no electric current is required, which is beneficial for welding battery conductors. By refocusing the beam to the desired position, a high rate of welds per minute can be achieved. As a high weld rate is expected, LBW is one of the favorite methods in battery production.
 For validating the welding connection, sensors can record data during the welding process, which can serve as a basis to classify if the desired quality was achieved. %The following sections explain how a set of data has to be analyzed and transformed to be used in the prediction process.
 
-\chapter{Methodology}
-KDD process erklären
+\chapter{Methodology and Experiments}
 
-sort steps to KDD
-
-
-
-
-
-
-\section{Dataset}
-
-idententical distribution of ok/NOK/WD40/Gleitmo
-
-Two data sets were obtained using two different
-photodiode-based sensors which recorded the back reflected laser radiation
-during laser beam welding to detect process defects, such as spatters, pol-
-lution, or holes at the weld seam´s surface.
-
-For the labeling of the measured signals (also called time series) an automated algorithm was used, see Fig-
-ure XXX, and the signal was divided into five parts.
-
-If Threshold violation, no furthe anaylis
-Application of a wavelet-based denoising algorithm Subdevision and recaling 
-wavelet based automatred labelling of data  
-
-laser power was kept constant 
-feed rate was varied in a certain parameter range
-
-Content of dataset:
-Table 
-“not OK”
-For a “1”, the weld seam is not OK.
-“signal”
-For a “1”, the signal exceeds a certain threshold. The threshold
-is the same for the entire data set.
-WD40
-For a “1”, the surface between the stripe and sheet was pol-
-luted with the lubricant WD40.
-Gleitmo
-For a “1”, the surface between the stripe and sheet was pol-
-luted with the lubricant Gleitmo.
-LWMID1
-The LWMID1 is a sequential number and is unique for each
-weld seam
-LWMID2
-The LWMID2 indicates a certain part of a weld seam
-(LWMID1) and has a range from 1 (beginning) to 5 (end)
-Signal11 – 112
-Each column contains a normalized raw value of the signal for
-sensor 1.
-Signal1dn1 – 112
-Each column contains a normalized raw value of the signal
-with a noise reduction for sensor 1.
-Signal21 – 112
-Each column contains a normalized raw value of the signal for
-sensor 2.
+The Knowledge Discovery in Databases (KDD) process is structured in four steps. At first Data Cleansing is performed to detect data quality issues or remove anomalies. The second step is Data Transformation to select the possible input data. Further, Data Mining is performed to generate to increase the database. Finally, the evaluation is performed to categorieze the success of a model. In teh following sections these steps are perfomed to predict the quality of a weldbeam with hte help of a given dataset.
 
 
 \section{Goal}
-The main two objectives are:
-1. Determining possible correlations between the measurements of
-sensor 1 and 2
-
-Due to the superimposition of many effects that occur highly dynamic and
-cannot be observed separately, the signals contain anomalies related to
-process instabilities and are included in different frequency spectrums.
-Based on the data sets, the weld seams shall be classified in the first group
-in the following three categories:
-OK
-Not OK
-Signal value exceeded
-
-
-As a second group, the weld seams need to be classified to one of the fol-
-lowing categories (only one of the two alternatives):
-Alternative 1:
-Lubricant
-No lubricant
+The main two objectives are:\newline\newline
+1.\newline Determining possible correlations between the measurements of
+sensor 1 and 2\newline\newline
+2.\newline Classifying the weld seam in four categories (OK , not OK, out of threshold)
 
 
 
-\section{devision und cleasing of dataset}
-\section{Possebilities for Dataminig}
-How can you deal with a small data set? Are there methods to extend the
-data set? Are there methods to artificially generate time series data?
-\section{Statictical Featurtes}
-How can the measurement signal be suitably pre-processed?
-How can process instabilities be detected?
-\begin{itemize}
-	\item min
-	\item max
-	\item Mean
-	\item Median
-	\item 0,25 perzentil
-	\item 0,75 perzentil
-	\item STD
-	\item SKewness 
-	\item Kurosis 
-	\item Sample Varianz
-	\item Entropy
-	\item RMS
-\end{itemize}
+\section{Data cleansing and pre-processing}
+\subsection{Dataset overview}
+As mentioned in the task description, the dataset contains measurements from two different photodiode sensors recording back reflected laser radiation during laser beam welding. Additionally, denoised values for signal one was also given. Each welding seam was divided into five equidistant sections whose measurements were individually recorded as a time series in the dataset. Based on the assignment the welding parameters were assumed to be constant across the dataset.\newline\newline
+Each signal log was categorized in four different, equally distributed binary categories: not OK, signal value exceeded, WD40 pollution and Gleitmo pollution. According to the assignment, labeling algorithm first detected if the signal value had been exceeded and if so, the OK/not OK classification was not carried out; thus, in the dataset all samples for which the signal value had been exceeded were uniformly marked as OK. In the second step the data was labeled according to the potentially present lubricant pollution. The labels of the lubricants were found to be exclusive, meaning that for no welding seam both WD40 and Gleitmo were present. In total, 77 (6\%) measurements were identified as “out of threshold”, 996 (74\%) as “OK” and 277 (21\%) as “not OK”. 450 (33\%) weld seams contained no pollution, 450 (33\%) were marked with WD40 and 450 (33\%) with Gleitmo.
+\subsection{Data visualization}
+Aside from statistical inspection, visualizing the data was the first step in obtaining an overview about features of the dataset. The figures below show plotted signal values for randomly chosen samples with varying labels. As can be seen in figure \ref{fig:VIZ1} and \ref{fig:VIZ2}, attempts were made to reproduce the denoising procedure used for signal 1 for signal 2. Additionally, the automatically calculated Person correlation coefficients between the values for signal 1 and 2 were also displayed.
+
+\begin{figure}[H]
+	\includegraphics[width=0.8\linewidth]{../img/VIZ1.png}
+	\caption{Visualization plot for sample 891}
+	\label{fig:VIZ1}
+\end{figure}
+\begin{figure}[H]
+	\includegraphics[width=0.8\linewidth]{../img/VIZ2.png}
+	\caption{Visualization plot for sample 674}
+	\label{fig:VIZ2}
+\end{figure}
+
+Based on the data inspection, a few important conclusions could be reached about the dataset: signal 2 was found to be typically much noisier than signal 1 and thus possibly worse for making predictions. Samples marked as “not OK” typically display higher values for all signals; however, no determining boundary distinguishing the two labels could be identified. Furthermore, the correlation coefficients between signals were found to carry little information about the weld quality. Despite reaching the mentioned conclusions, it was difficult to identify the decisive features only based on the visualization. Thus, further analysis including possible data transformation was needed.
+\subsection{Data cleansing}
+After a careful examination of the dataset an inconsistency regarding the labelling of signals in the “out of threshold” category was identified: multiple samples across the dataset displayed only the value “1” for all signal readings of all the sensors. Although most of such samples were labeled as “out of threshold”, there was a significant number of logs where this was not the case. As the signal values were the only source of input feature for the prediction model, such inconsistency would pose a significant limit to the achieved accuracy. Thus, a new condition for the labeling of the signals was chosen based on the original set of OOT values and the data relabeled accordingly; the new condition being set at 13 occurrences of the value “1” in signal 1 logs, which was the minimum among the samples originally labeled as OOT.
+
+\section{Data Transformation Methodology}
+Data Transformation aims at extracting meaningful features from the dataset that can be used for training the classification model. This step is especially important while dealing with often noisy and unstructured time series data, such as provided in the given dataset. There exist many possible approaches to the choice of features and the decision can greatly affect both the learning speed and the output quality of the model. For the given assignment both 1D and 2D transformation techniques were examined, each of them being briefly discussed in the following section. Visualization plots for selected representative samples were also provided for better evaluation of the statistical meaning of each examined feature.
+\subsection{Statistical features}
+Extracting statistical features allows to transform the dataset of one signal into a single characteristic value that may be decisive about the classification of the signal. In the following section the applied statistical features and the results obtained from the dataset are briefly discussed. For the calculation of each feature, an affiliated method from the pandas, NumPy and SciPy modules were used. Since values obtained from signal 2 were typically noisier and thus yielded worse results for classification compared to signal 1 and signal 1 denoised, only visualizations for the two latter ones were provided.
+\subsubsection{Mean}
+One of the most prominent statistical approaches is the arithmetic mean. Although in many cases the method is very useful for characterizing the measurement, it also risks filtering out possibly meaningful outliers, which often makes it inadequate for highly varying data. The figures \ref{fig:S1MEAN} and \ref{fig:S1DNMEAN}  below shows the distribution of the mean values of signal one (raw and denoised) across all measurements in the pre-processed dataset with the distinguishment between the OK/NOK labels.
+
+\begin{figure}[H]
+	\includegraphics[width=0.8\linewidth]{../img/S1_not_OK_MEAN_relabeled.png}
+	\caption{The mean values of signal 1 across samples.}
+	\label{fig:S1MEAN}
+\end{figure}
+\begin{figure}[H]
+	\includegraphics[width=0.8\linewidth]{../img/S1_DN_not_OK_MEAN_relabeled.png}
+	\caption{The mean values of denoised signal 1 across samples.}
+	\label{fig:S1DNMEAN}
+\end{figure}
+
+As seen in the figures \ref{fig:S1MEAN} and \ref{fig:S1DNMEAN} , for both signals the data seems to show a significant correlation between the mean value of the signal and the quality of the weld; poor quality welds tending to correspond to higher mean values. This is especially noticeable across samples affected by pollution with the lubricant Gleitmo (samples 200 through 401 and 950 through 1125). Despite that, there exists a vast region of signals with mean around 0.1 where both OK and NOK samples are found. This confusion region is likely to cause inaccuracies in any classification model using the metric as input which highly undermines its practicality for the model.
+
+\subsubsection{Standard deviation}
+
+Standard deviation (STD) is a popular metric of spread of the values within a sample. Thus, it helps distinguish stable measurements from highly varying ones. In context of quality prediction based on time series data the feature can provide valuable information about possible changes detected in the weld seam. The figure below shows the distribution of standard deviation values across the dataset.
+
+\begin{figure}[H]
+	\includegraphics[width=0.8\linewidth]{../img/S1_not_OK_STD_relabeled.png}
+	\caption{The Standard deviation of signal 1 across samples.}
+	\label{fig:S1STD}
+\end{figure}
+\begin{figure}[H]
+	\includegraphics[width=0.8\linewidth]{../img/S1_DN_not_OK_STD_relabeled.png}
+	\caption{The Standard deviation of denoised signal 1 across samples.}
+	\label{fig:S1DNSTD}
+\end{figure}
+
+Based on the plot (see figures \ref{fig:S1STD} and \ref{fig:S1DNSTD}) the signal’s standard deviation seems slightly more adequate for OK/NOK classification of the samples than the mean; the boundary between the two clusters being more protruding. The effect is again augmented by the presence of Gleitmo lubricant. However, the confusion region in this case is still very prominent which again questions the metric’s applicableness.
+
+\subsubsection{Minimum, maximum and percentiles}
+Other easily identifiable characteristic features within a sample are the maximum, the minimum, as well as the value at a given percentile (most commonly used being Q25, Q75, and Q50 aka the median). The plot below shows the scattering of the first signal’s maximal value across samples which proved to be the most significant metric across all the others mentioned in this section.
+
+\begin{figure}[H]
+	\includegraphics[width=0.8\linewidth]{../img/S1_not_OK_MAX_relabeled.png}
+	\caption{The maximum values of signal 1 across samples.}
+	\label{fig:S1MAX}
+\end{figure}
+\begin{figure}[H]
+	\includegraphics[width=0.8\linewidth]{../img/S1_DN_not_OK_MAX_relabeled.png}
+	\caption{The maximum values of denoised signal 1 across samples.}
+	\label{fig:S1DNMAX}
+\end{figure}
+Based on the visualization the maximal value seems to be the most promising feature for OK/NOK classification compared to the other examined ones. Nevertheless, a significant confusion region is still noticeable. This is likely due to the metric’s sensitivity to sudden changes which the signals exhibit.
+
+\subsubsection{Root mean square}
+The Root mean square (RMS) of a sample is defined as the square root of the arithmetic mean of the squared values in the sample. It is widely used in signal processing as it can be interpreted as the strength of the signal. The plots below show the spreading of the RMS values for signal 1 across samples.
+\begin{figure}[H]
+	\includegraphics[width=0.8\linewidth]{../img/S1_not_OK_RMS_relabeled.png}
+	\caption{The RMS values of signal 1 across samples.}
+	\label{fig:S1RMS}
+\end{figure}
+\begin{figure}[H]
+	\includegraphics[width=0.8\linewidth]{../img/S1_DN_not_OK_RMS_relabeled.png}
+	\caption{The RMS values of denoised signal 1 across samples.}
+	\label{fig:S1DNRMS}
+\end{figure}
+As can be seen on figures \ref{fig:S1RMS} and \ref{fig:S1DNRMS} the RMS shows a similar pattern as the already examined mean and STD; faulty samples typically exhibiting a higher value, which is still augmented by the presence of a lubricant, especially Gleitmo. Again, based on the visualization a quite significant confusion region can be seen as well.
+
+\subsubsection{Skewness}
+Skewness is a measure of the asymmetry of the probability distribution of a real-valued random variable around its mean value. For positive skewness more samples have a height value smaller than the mean; the opposite being true for negatively skew distribution (1). The plots below show the distributions of sample skewness for signal 1 and signal 1 denoised across the measurements.
+\begin{figure}[H]
+	\includegraphics[width=0.8\linewidth]{../img/S1_not_OK_Skewness_relabeled.png}
+	\caption{The Skewness of signal 1 across samples.}
+	\label{fig:S1SK}
+\end{figure}
+\begin{figure}[H]
+	\includegraphics[width=0.8\linewidth]{../img/S1_DN_not_OK_Skewness_relabeled.png}
+	\caption{The Skewness of denoised signal 1 across samples.}
+	\label{fig:S1DNSK}
+\end{figure}
+
+As visible in the graphs, the poor differentiation of skewness values between the labels for both signals make the feature unsuitable for the classification task. It suggests that there is hardly any correlation between the weld quality and the proportions of the signal’s distribution.
+\subsubsection{Entropy}
+Entropy is another statistical feature often applied for time series data. It is the measure of impurity associated with a random variable. A sample containing more noise will have a higher entropy value. The graph below shows the distribution of entropy values for signal 1 across the dataset.
+\begin{figure}[H]
+	\includegraphics[width=0.8\linewidth]{../img/S1_not_OK_Entropy_relabeled.png}
+	\caption{The Entropy of signal 1 across samples.}
+	\label{fig:S1EN}
+\end{figure}
+\begin{figure}[H]
+	\includegraphics[width=0.8\linewidth]{../img/S1_DN_not_OK_Entropy_relabeled.png}
+	\caption{The Entropy of denoised signal 1 across samples.}
+	\label{fig:S1DNEN}
+\end{figure}
+Based on the graph for the denoised data yet again a characteristic pattern can be seen for samples of both categories; the NOK measurements having typically lower entropy values. Still, it is difficult to identify an unambiguous boundary between the two clusters which makes the metric unsuitable for effective classification. For the raw signal data the points are even more indistinguishable from each other. This is likely caused by the large amount of noise in the measurements.
+
 \section{FFT}
-\section{Wavelet}
+FFT or Fast Fourier Transform is an algorithm to transform a signal from time-space domain into frequency domain. It’s often used to analyze stationary systems and its vibrations. (cite:Signalverarbeitung) In our research we did perform a FFT with a hope to reveal some more information out of data during feature engineering process. 
+
+
+
+
+To transform the signal python scipy.fftpack package with default parameters was used to perform the FFT transformation. At first signal 1 and Signal 1 DN were transformed for Sample 2 and plotted. Figure \ref{fig:FFT1} shows these 2 Signals after transformation. Signal 1 DN has 1 peak at 0 and is constant showing no peaks (no further information). Signal 1 has multiple peaks all over the spectrum. Therefore, we will take signal 1 as input for further FFT analysis.
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{../img/FFT1.png}
+	\caption{FFT1}
+	\label{fig:FFT1}
+\end{figure}
+
+In figure \ref{fig:FFT2} and \ref{fig:FFT3} of signal 1 for the four samples are shown. On the left plot Sample 3 is shown which was contaminated with WD 40 has an NOK = 0 label while Sample 203 was contaminated with Gleitmo is NOK = 1. While observing the two FFT’s from 2 different samples no obvious differences can be registered. Both samples have a peak at frequency = 0 which can be interpretated as a vibration with a very big period. In comparison to the left plot, on the right both samples are NOK = 0. Similarly to the plot on the left no huge differences can be detected between these two samples. Thus, it can be said, FFT doesn’t reveal the difference between:
+
+
+1)	NOK or OK
+
+
+2)	WD40 or Gleitmo\newline
+And isn’t useful as an input for the classifier.
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{../img/FFT2.png}
+	\caption{FFT2}
+	\label{fig:FFT2}
+\end{figure}
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{../img/FFT3.png}
+	\caption{FFT3}
+	\label{fig:FFT3}
+\end{figure}
+
+
+\section{Continuous Wavelet Transformation}
+Similarly to Fourier Transform, the wavelet transform maps the signal from time to frequency domain; the key difference being that is also provides time resolution of the transformed signal which makes it more suitable for analyzing non-stationary systems (3). The reasoning behind applying CWT upon the provided dataset was the assumption that certain changes in the signal’s frequency may be caused by particular defects in the welding seam. Furthermore, a wavelet-based algorithm was also mentioned as a part of the labelling process which suggested that the transform may yield valuable information about the weld seam quality.
+The transform was carried out with help of the pywavelets module using the Morlet wavelet and varying ranges of scaling factors (up to 1000). The transformed data was subsequently visualized with the intention of identifying any possible underlying patterns. The following figures show exemplary plots for two randomly chosen samples with differing labels.
+\begin{figure}[H]
+	\includegraphics[width=0.8\linewidth]{../img/Sample_283_DN_(OK).png}
+	\caption{CWT visualization for sample 283 (Signal 1 denoised).}
+	\label{fig:CWT1}
+\end{figure}
+\begin{figure}[H]
+	\includegraphics[width=0.8\linewidth]{../img/Sample_984_DN_(NOK).png}
+	\caption{CWT visualization for sample 984 (Signal 1 denoised).}
+	\label{fig:CW2}
+\end{figure}
+As demonstrated by the above figures, no compelling correlation between the labelling and the wavelet transform coefficients of the signal could be identified. Thus, it was decided not to include the transformed data in further consideration. It is possible that the seemingly poor performance of the approach resulted from the inappropriate choice of the transform parameters. However, their adjustment would require additional knowledge about the data collection and labelling process which was not provided.
+
+
 \section{Posiible Classification Models} 
-NN
-LOG REG
-LS
-baeysian regression
-Gradientren Boosting
+%NN
+%LOG REG
+%LS
+%baeysian regression
+%Gradientren Boosting
+\subsection{LOG REG}
+Logistic Regression is a method of binary classification (2 classes). It is mostly used In statistics and made its way to machine learning. The method called so after the logistic function (sigmoid function) which maps any real value in value between 0 and 1. (https://machinelearningmastery.com/logistic-regression-for-machine-learning/)
+\newline
+At first, data was read. For the input label–columns were dropped from the data-table, so just all 112 Signal values represented the input. Input was assigned to X and label-column to y. Which labels were used depended upon in which classes the classification were to conduct. So for example for the OK/NOK classification the NOK column was assigned to y. 
+\newline
+Afterwards train/test split was conducted. The typical 70/30 split ratio was used. Random state wasn’t engaged. The logistic regression model was created with pythons library “sklearn” and its class “Pipeline”. max\_iter = 1e5 parameter was given.\newline
 
-\section{Preparation of the NN}
-For the training of a classification model, the signals as well as features (e.g.
-the frequency) can be used as input. Based on a test dataset, the trained
-classification model should be used to determine the weld seam quality be-
-longing to one category of each of the two groups listed above.
 
-Do you have to conduct the train/test-split manually?
-What features are relevant and suitable for the training of the model?
-was haben wir als input benutzt
 
-\section{hyperparameter Tuning} 
+The model performed best on the RAW data input. Signal 1 performed the same as the signal 1\_dn. The results are shown in the figure. The accuracies were obtained with Signal 1\_dn as input.
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{../img/log.png}
+	\caption{Results of Logistic Regression. Y = Classification 
+		X = Input 
+	}
+	\label{fig:log}
+\end{figure}
+
+
+\section{Usage of a Neural Network}
+Another kind of model which can be used for the classification of data are Neural Networks (NNs), also referred to as Multilayer Perceptrons. They are composed of an input layer, multiple hidden layers and an output layer. The number of neurons, also called nodes, in the hidden layers is arbitrary while in the input and output layer it corresponds with the dimension of the input/output. Depending on the task of the neural network (Regression or Classification), the so-called activation function in the output layers is chosen. The activation function determines the mathematical operations performed at each node. For the hidden layers the choice of the activation function is independent of the application of the NN.
+The main advantages of Neural Networks are their universality, which is a result of the nonlinearities in the neurons and their ability to efficiently approximate functions in high-dimensional spaces. These properties are especially useful when considering complex datasets.
+For a NN, a large number of hyperparameters must be determined. The main ones are:\newline\newline
+-	Architecture of the NN (number of hidden layers and respective number of neurons)\newline
+-	Activation function\newline
+-	Optimizer and Learning rate\newline\newline
+
+
+Based on engineering practices presented in the courses “AI in Production Engineering” and “Physics-informed machine learning”, as well as the paper “Real-time prediction of…”, the widely used ADAM optimizer is chosen together with a learning rate of 0.001. 
+Since a binary classification must be conducted, the “Sigmoid” activation function is used in the output layer.
+For the activation function of the hidden layers the hyperbolic tangent (tanh) and the Rectified Linear Unit (ReLu) function are considered. For comparison multiple tests are conducted using the 10-fold stratified cross validation as described in XX. Additionally, different NN architectures (1-7 layers, 5 – 100 neurons) are evaluated. 
+The test results show that especially with bigger NNs, a higher mean prediction accuracy can be achieved using ReLu (approx. 93\%), while the accuracy of the networks using the tanh function reaches its maximum accuracy of around 91\% already with two hidden layers and then stagnates.
+The variance of the prediction accuracy ranges between approx. 1.2\% and approx. 4.1\%. In average, it is around 1\% higher when using ReLu.
+For the NN architectures using only one hidden layer, the shares of false positives and false negatives are similar (approx. 5.8\% vs approx. 4.8\%). However, already with three hidden layers, the share of false negatives decreases to around 2.8\%, while the share of false positives increases to around 6.2\%. Especially with higher numbers of hidden layers this effect is more pronounced when using the ReLu activation function. This indicates at least a partial overfit of the model on the dataset.
+Considering the planned application of the model, an emphasis is put on the robustness and reliability of the expected prediction. Therefore, a model architecture with only one hidden layer and 75 neurons, using the tanh activation function is chosen. The expected prediction accuracy is 89\%, which is around four percent lower than the results obtained with more complex models. However, the expected very low variance of the results (1.33\%) and the balance between the shares of false negatives and false positives (6.1\% vs 4.9\%) ensure the reliability of the prediction and minimize the risk of possible overfitting. Especially in production engineering, a bias in the predictions introduced by overfitting can have detrimental effects on the practical usability of a model and may nullify its practical use in the long term.
+
 \chapter{Results}
-Clear presentation of the results
-Precise and meaningful labeling of illustrations and diagrams
-How good does the model perform on the test data? 
+\section{Results of the NN}
+Figure \ref{fig:NN} shows the prediction accuracy for different labels y using the NN with the hyperparameters described in X.X. All predictions were done using the raw, but denoised data of sensor 1 or derived statistical metrics as the input of the NN as this gave the highest accuracies, regardless of the data label.
+It is not possible to correctly predict for the label ‘WD40’ and ‘Lubricant’. In both cases the NN classifies all outputs the same. This problem persists, regardless of the input.
+The predictions for the label ‘Gleitmo’ are slightly better, albeit also with a strong tendency for false negatives. 
+In summary, correctly predicting the presence or the kind of lubricant at the weld seam is not possible with the available data sets and used statistical metrics.
 
-crossvalidation
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{../img/NN.png}
+	\caption{Results of the classification using a NN}
+	\label{fig:NN}
+\end{figure}
+
 \chapter{Discussion}
 Confusion Matrix
 unterscheidung von Gleitmittel?
@@ -253,10 +369,8 @@ conduct if you had more time
 
 \chapter{Appendix}
 \printbibliography
-\renewcommand{\thechapter}{\Roman{chapter}}
-\setcounter{chapter}{2}
+%\renewcommand{\thechapter}{\Roman{chapter}}
+%\setcounter{chapter}{2}
 \chapter{Contents of the project folder}
-\chapter{Eidesstattliche Erklärung}
-
 
 \end{document}          
