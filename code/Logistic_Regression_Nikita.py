@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, StratifiedKFold
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
 
@@ -19,7 +19,102 @@ def mean_and_std (pandas_df):
 def RMS(series):
     rms = np.sqrt(np.sum(series**2)/len(series))
     return rms
+def selectorInput(ModeX):
+    rmsvalues = pd.Series([RMS(e[1]) for e in data_just_signal.iterrows()])
+    if ModeX == "RAW":
+        X = np.asarray(data_just_signal)
+    elif ModeX == "mean":
+        X = mean.to_numpy().reshape(-1, 1)
+    elif ModeX =="std":
+        X = std.to_numpy().reshape(-1, 1)
+    elif ModeX == "rms":
+        rmsvalues = pd.Series([RMS(e[1]) for e in data_just_signal.iterrows()])
+        X = rmsvalues.to_numpy().reshape(-1, 1)
+    elif ModeX == "mean_and_std":
+        X = np.stack((std.to_numpy(), mean.to_numpy()), axis = 1).reshape(-1, 2)
+    return X
+def selectorOutput(modeY):
+    if modeY == "NOK":
+        y = data["not OK"].to_numpy()
+    elif modeY == "LUBE":
+        y = data["WD40"].to_numpy() + data["Gleitmo"].to_numpy()
+        y = np.minimum(y, 1)
+    elif modeY == "WD40":
+        y = data["WD40"].to_numpy()
+    elif modeY == "Gleitmo":
+        y = data["Gleitmo"].to_numpy()
+    return y
+def LogisticEval(X_train, X_test, y_train, y_test):
+    regressor = LogisticRegression()
+    regressor.fit(X_train, y_train)
 
+    y_hat = regressor.predict(X_test)
+    ###calc of false negatives and false positives###
+    print("number of samples evaluated: ", len(y_hat))
+    np_false_negative = np.zeros(len(y_hat))
+    np_false_positive = np.zeros(len(y_hat))
+    np_false_positive[y_hat > y_test] = 1
+    np_false_negative[y_hat < y_test] = 1
+    false_negative = np_false_negative.sum()
+    false_positive = np_false_positive.sum()
+    print("false positives: ", false_positive)
+    print("false negatives: ", false_negative)
+
+    # x_scatter_1 = np.arange(len(y_test))
+    # plt.scatter(x_scatter_1, y_test)
+    # # plt.scatter(x_scatter_1, y_hat, c="red")
+    # plt.show()
+    # result = np.stack((y_hat, y_test), axis=1)
+    # print(result)
+
+    ### Pipeline Solution ###
+
+    # pipeline_classification = Pipeline(steps=[('model', LogisticRegression(max_iter=1e5))])
+    #
+    # pipeline_classification.fit(X_train, y_train)
+    #
+    # score = pipeline_classification.score(X_test, y_test)
+    # print('The accuracy of the classifier is: %.6f' % score)
+
+    score = regressor.score(X_test, y_test)
+    print(score)
+
+    print("DONE")
+    return false_positive, false_negative, score
+def main():
+
+    ### RAW, mean, std, rms, mean_and_std as input ###
+    X = selectorInput("mean")
+
+    ### NOK, WD40, Gleitmo, LUBE as Output ###
+    y = selectorOutput("Gleitmo")
+
+    ###cross validation###
+    number_splits = 10
+    score_total = 0
+    np_false_positive_total = 0
+    np_false_negative_total = 0
+    skf = StratifiedKFold(n_splits=number_splits, shuffle=True, random_state=42)
+    for train_index, test_index in skf.split(X, y):
+        #print("TRAIN:", train_index, "TEST:", test_index)
+        X_train, X_test = X[train_index], X[test_index]
+        y_train, y_test = y[train_index], y[test_index]
+
+        np_false_positive, np_false_negative, score = LogisticEval(X_train,X_test, y_train, y_test)
+        score_total += score
+        np_false_negative_total += np_false_negative
+        np_false_positive_total += np_false_positive
+    score_total = score_total / number_splits
+    np_false_positive_total = np_false_positive_total / number_splits
+    np_false_negative_total = np_false_negative_total / number_splits
+    print("mean score: ", score_total)
+    print("mean false negative: ", np_false_negative_total)
+    print("mean false positive: ", np_false_positive_total)
+
+    ###normal train-test-split###
+    #X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.20, shuffle=True)  # ;)
+
+    #print(X_train, X_test)
 
 if __name__ == "__main__":
     print("Lets GOOOOO")
@@ -27,64 +122,11 @@ if __name__ == "__main__":
     S1_DN = "../Data/S1_DN.xlsx"
     S2 = "../Data/S2.xlsx"
 
+    data, data_just_signal = read_pandas(S1_DN)
+    mean, std = mean_and_std(data_just_signal)
+    rmsvalues = pd.Series([RMS(e[1]) for e in data_just_signal.iterrows()])
+
+    main()
     #TH1 = "../OOT/S1_OOT_ONLY.xlsx"
     #TH1_DN = "../OOT/S1_DN_OOT_ONLY.xlsx"
     #TH2 = "../OOT/S2_OOT_ONLY.xlsx"
-
-    data, data_just_signal = read_pandas(S1_DN)
-    print(data.head())
-    mean, std = mean_and_std(data_just_signal)
-
-    rmsvalues = pd.Series([RMS(e[1]) for e in data_just_signal.iterrows()])
-
-
-
-    X = data_just_signal                                                            #RAW DATA as feature -> Accurace = 0.910
-    #X = mean.to_numpy().reshape(-1, 1)                                              #mean as feature -> Accurace = 0.81
-    #X = std.to_numpy().reshape(-1, 1)                                               #std as feature -> Accuracy = 0.785
-    #X = rmsvalues.to_numpy().reshape(-1, 1)                                         #rms as feature -> Accuracy = 0.822
-    #X = np.stack((std.to_numpy() ,mean.to_numpy()), axis = 1).reshape(-1, 2)        #mean and std as feature ->  Accuracy = 0.822
-
-
-    #y = data["not OK"].to_numpy()
-
-
-
-    y = data["WD40"].to_numpy()                                                        # ->  Accuracy = 0.668 with RAW
-    #y  = data["Gleitmo"].to_numpy()                                                   # ->  Accuracy = 0.696 with RAW
-    # y = data["WD40"].to_numpy() + data["Gleitmo"].to_numpy()
-    # y = np.minimum(y, 1)                                                               #   Accuracy = 0.67
-    # print(y)
-#0.823529
-
-
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.20, shuffle=True, random_state = 43)  # ;)
-
-    #print(X_train, X_test)
-
-    ### Pipeline Solution ###
-
-    pipeline_classification = Pipeline(steps=[('model', LogisticRegression(max_iter=1e5))])
-
-    pipeline_classification.fit(X_train, y_train)
-
-    score = pipeline_classification.score(X_test, y_test)
-    print('The accuracy of the classifier is: %.6f' % score)
-
-
-    #regressor = LogisticRegression()
-    #regressor.fit(X_train, y_train)
-
-    #y_hat = regressor.predict(X_test)
-
-    #plt.scatter(X_test, y_test)
-    #plt.show()
-    #print(type(y_train))
-    #result = np.stack((y_hat, y_test), axis = 1)
-    #print(result)
-
-    #score = regressor.score(X_test, y_test)
-
-    #print(score)
-
-    print("DONE")
