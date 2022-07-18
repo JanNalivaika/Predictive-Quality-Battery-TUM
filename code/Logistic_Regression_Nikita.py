@@ -50,15 +50,15 @@ def LogisticEval(X_train, X_test, y_train, y_test):
 
     y_hat = regressor.predict(X_test)
     ###calc of false negatives and false positives###
-    print("number of samples evaluated: ", len(y_hat))
+    #print("number of samples evaluated: ", len(y_hat))
     np_false_negative = np.zeros(len(y_hat))
     np_false_positive = np.zeros(len(y_hat))
     np_false_positive[y_hat > y_test] = 1
     np_false_negative[y_hat < y_test] = 1
     false_negative = np_false_negative.sum()
     false_positive = np_false_positive.sum()
-    print("false positives: ", false_positive)
-    print("false negatives: ", false_negative)
+    #print("false positives: ", false_positive)
+    #print("false negatives: ", false_negative)
 
     # x_scatter_1 = np.arange(len(y_test))
     # plt.scatter(x_scatter_1, y_test)
@@ -77,23 +77,23 @@ def LogisticEval(X_train, X_test, y_train, y_test):
     # print('The accuracy of the classifier is: %.6f' % score)
 
     score = regressor.score(X_test, y_test)
-    print(score)
+    #print(score)
 
-    print("DONE")
+    #print("DONE")
     return false_positive, false_negative, score
-def main():
+def main(input_name, output_name):
 
     ### RAW, mean, std, rms, mean_and_std as input ###
-    X = selectorInput("mean")
-
+    X = selectorInput(input_name)
+    print(input_name)
     ### NOK, WD40, Gleitmo, LUBE as Output ###
-    y = selectorOutput("Gleitmo")
-
+    y = selectorOutput(output_name)
     ###cross validation###
     number_splits = 10
-    score_total = 0
+    score_mean = 0
     np_false_positive_total = 0
     np_false_negative_total = 0
+    score_array = []
     skf = StratifiedKFold(n_splits=number_splits, shuffle=True, random_state=42)
     for train_index, test_index in skf.split(X, y):
         #print("TRAIN:", train_index, "TEST:", test_index)
@@ -101,16 +101,19 @@ def main():
         y_train, y_test = y[train_index], y[test_index]
 
         np_false_positive, np_false_negative, score = LogisticEval(X_train,X_test, y_train, y_test)
-        score_total += score
+        score_mean += score
+        score_array.append(score)
         np_false_negative_total += np_false_negative
         np_false_positive_total += np_false_positive
-    score_total = score_total / number_splits
+    score_mean = score_mean / number_splits
+    standard_dev = np.std(score_array)
     np_false_positive_total = np_false_positive_total / number_splits
     np_false_negative_total = np_false_negative_total / number_splits
-    print("mean score: ", score_total)
+    print("mean score: ", score_mean)
     print("mean false negative: ", np_false_negative_total)
     print("mean false positive: ", np_false_positive_total)
-
+    print("Standard deviation: ", standard_dev)
+    return score_mean, standard_dev,score
     ###normal train-test-split###
     #X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.20, shuffle=True)  # ;)
 
@@ -126,7 +129,17 @@ if __name__ == "__main__":
     mean, std = mean_and_std(data_just_signal)
     rmsvalues = pd.Series([RMS(e[1]) for e in data_just_signal.iterrows()])
 
-    main()
+    #for i in ["RAW", "mean", "std", "rms", "mean_and_std"]#
+    score_mean, standard_dev, score = main("RAW", "NOK")
+    fig = plt.figure()
+    plt.axis([0,0, 0, 100])
+    plt.title("Accuracy of Log Reg: ")
+    plt.ylabel("Accuracy in %")
+    plt.scatter(0, score_mean * 100, s=20, marker='x')
+    plt.errorbar(0, score_mean * 100, standard_dev * 100, capsize=10,
+                capthick=1, ls='none')
+    plt.show()
+    fig.savefig('../Data/code_for_visualizations/Data_Visualization_plots/Log Reg Accuracies/Accuracy_Log_Reg_on_RAW_NOK_0-100.jpg', bbox_inches='tight', dpi=250)
     #TH1 = "../OOT/S1_OOT_ONLY.xlsx"
     #TH1_DN = "../OOT/S1_DN_OOT_ONLY.xlsx"
     #TH2 = "../OOT/S2_OOT_ONLY.xlsx"
