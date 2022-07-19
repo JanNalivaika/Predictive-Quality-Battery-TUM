@@ -308,7 +308,8 @@ The transform was carried out with help of the pywavelets module using the Morle
 As demonstrated by the above figures, no compelling correlation between the labelling and the wavelet transform coefficients of the signal could be identified. Thus, it was decided not to include the transformed data in further consideration. It is possible that the seemingly poor performance of the approach resulted from the inappropriate choice of the transform parameters. However, their adjustment would require additional knowledge about the data collection and labelling process which was not provided.
 
 
-\section{Posiible Classification Models} 
+\section{Classification Models} 
+In accordance with the KDD process, different models for finding patterns in the pre-processed data are considered.  The three different models presented in the following chapters are chosen based on previous publications regarding predictive quality classification in production engineering and recent trends in machine learning.
 %NN
 %LOG REG
 %LS
@@ -316,7 +317,57 @@ As demonstrated by the above figures, no compelling correlation between the labe
 %Gradientren Boosting
 \subsection{LOG REG}
 Logistic Regression is a method of binary classification (2 classes). It is mostly used In statistics and made its way to machine learning. The method called so after the logistic function (sigmoid function) which maps any real value in value between 0 and 1. (https://machinelearningmastery.com/logistic-regression-for-machine-learning/)
-\newline
+This output is equivalent to the predicted probability P\_i of the input X\_i belonging to the class y\_i  (falls platz hier die gleichung). 
+The final discrete classification is based on the whether the probability P\_i is great or equal/smaller than 0.5.
+
+
+
+
+\subsection{Gradient boosting}
+Gradient boosting is a recent machine learning technique used for regression and classification tasks based on ensemble learning. Many weak prediction models are averaged and result in a strong prediction model. XGBoost is a gradient boosting method based on decision trees. It has gained popularity because of its very good performance in machine learning competitions  . XGBoost also impresses with its high computing speed.\cite{ What is XGBoost? | Data Science | NVIDIA Glossary, XGBoost | Kaggle}
+The hyperparameters of the “XGBoost” gradient boosting model are:
+-	The number of iterations in the model generation cycle
+-	The learning rate/the weight of each model for the final prediction
+Considering the limited computational resources at hand they are optimized using a randomized non-exhaustive grid search. For the final model the number of model generation cyles is set to XXXX and the learning rate to XXXX.
+Furthermore, we performed a principal component analysis to improve in calculation speed and complexity.
+
+
+
+
+
+\subsection{Usage of a Neural Network}
+
+
+
+Another kind of model which can be used for the classification of data are Neural Networks (NNs). They consist of an input layer, multiple hidden layers and an output layer. The number of neurons in the hidden layers is arbitrary while in the input and output layer it corresponds with the dimension of the input/output. Depending on the task of the neural network (Regression or Classification), the so-called activation function in the output layers is chosen. The activation function determines the mathematical operations performed at each node. For the hidden layers the choice of the activation function is independent of the application of the NN.
+For a NN, a large number of hyperparameters must be determined. The main ones are:\newline\newline
+-	Optimizer and Learning rate\newline\newline
+-	Activation function\newline
+-	Architecture of the NN (number of hidden layers and respective number of neurons)\newline
+Based on engineering practices presented in the courses “AI in Production Engineering” and “Physics-informed machine learning”, as well as the paper “Real-time prediction of…”, the widely used ADAM optimizer is chosen together with a learning rate of 0.001. 
+Since a binary classification must be conducted, the “Sigmoid” activation function is used in the output layer.
+For the activation functions of the hidden layers, the hyperbolic tangent (tanh) and the Rectified Linear Unit (ReLu) function are considered. Their performance with different NN architectures (1-7 layers, 5 – 100 neurons) is evaluated in multiple tests using a cross validation. The results show that especially with bigger NNs, a higher mean prediction accuracy can be achieved using the ReLu function. However, this comes at the expense of a higher variance and a gradual decrease in the share of false negatives/a gradual increase in the share of false positives. This indicates at least a partial overfit of the model on the dataset. Considering the planned application of the model, an emphasis is put on the robustness of the expected prediction and the prevention of a bias due to overfitting. Therefore, a model architecture with only one hidden layer and 75 neurons, using the tanh activation function is chosen.  
+
+
+
+
+Another kind of model which can be used for the classification of data are Neural Networks (NNs), also referred to as Multilayer Perceptrons. They are composed of an input layer, multiple hidden layers and an output layer. The number of neurons, also called nodes, in the hidden layers is arbitrary while in the input and output layer it corresponds with the dimension of the input/output. Depending on the task of the neural network (Regression or Classification), the so-called activation function in the output layers is chosen. The activation function determines the mathematical operations performed at each node. For the hidden layers the choice of the activation function is independent of the application of the NN.
+The main advantages of Neural Networks are their universality, which is a result of the nonlinearities in the neurons and their ability to efficiently approximate functions in high-dimensional spaces. These properties are especially useful when considering complex datasets.
+For a NN, a large number of hyperparameters must be determined. The main ones are:\newline\newline
+-	Architecture of the NN (number of hidden layers and respective number of neurons)\newline
+-	Activation function\newline
+-	Optimizer and Learning rate\newline\newline
+
+
+
+\chapter{Results}
+In the following chapter the performance of the three different classification models is evaluated. For this comparison the accuracy metric (share of correct predictions) and its spread are considered, as well as the share of false positives and false negatives.
+Intercomparability between the results of the different models is ensured by using the same ten-fold stratified cross validation for all input/output combinations and models.
+All the results are obtained using the denoised data from sensor 1. The predictions with this data set proved to be continuously superior or equal to the ones obtained using the other data sets (maybe cite data chapter with plots). 
+Additionally, all samples considered to be incorrectly classified as “within signal threshold” are removed in accordance with the procedure described in chapter X.X.
+
+
+\section{results LOG}
 At first, data was read. For the input label–columns were dropped from the data-table, so just all 112 Signal values represented the input. Input was assigned to X and label-column to y. Which labels were used depended upon in which classes the classification were to conduct. So for example for the OK/NOK classification the NOK column was assigned to y. 
 \newline
 Afterwards train/test split was conducted. The typical 70/30 split ratio was used. Random state wasn’t engaged. The logistic regression model was created with pythons library “sklearn” and its class “Pipeline”. max\_iter = 1e5 parameter was given.\newline
@@ -333,8 +384,11 @@ The model performed best on the RAW data input. Signal 1 performed the same as t
 	\label{fig:log}
 \end{figure}
 
-\subsection{Gradient boosting}
-Gradient boosting is a recent machine learning technique used for regression and classification tasks based on ensemble learning. Many weak prediction models are averaged and result in a strong prediction model. XGBoost is a gradient boosting method based on decision trees. It has gained popularity because of its very good performance in machine learning competitions  . XGBoost also impresses with its high computing speed.
+
+
+
+
+\section{resulots gradientr boost }
 We use the XGBoost library for predicting the quality of battery contacting and to compare the performance to the other used models (neural network and logistic regression). In a first step, we preprocessed our data. Our features are represented by each 112 signal values from 2 sensors as input and our label consists of the respective classification goal. Data from sensor 1 was already denoised. We used wavelets to denoise the signals from sensor 2 in MATLAB. We then conducted a train-test split with the typical split ratio of 70/30 to train the model. For better comparability of our models, to avoid overfitting and to get the best indicator for our overall performance, we performed a stratified cross validation with 10 folds. In order to improve our hyperparameters and the result, a randomized (not exhaustive) grid search was conducted. Furthermore, we performed a principal component analysis to improve in calculation speed and complexity. Table 1 shows our results for the different classification tasks and our best performing feature combinations. “Sensor 1dn” are the denoised signals from sensor 1. “Sensor 2MAT” are the manually denoised signals with MATLAB from sensor 2.
 
 \begin{figure}[H]
@@ -347,26 +401,14 @@ We use the XGBoost library for predicting the quality of battery contacting and 
 
 Since we only have limited calculation resources, we performed a not exhaustive grid search for hyperparameter optimization. In order to obtain the best results, it would be beneficial to perform an exhaustive grid search in a next step. The performance of our estimator would also benefit from further feature engineering approaches and more train data. 
 
-\subsection{Usage of a Neural Network}
-
-Another kind of model which can be used for the classification of data are Neural Networks (NNs), also referred to as Multilayer Perceptrons. They are composed of an input layer, multiple hidden layers and an output layer. The number of neurons, also called nodes, in the hidden layers is arbitrary while in the input and output layer it corresponds with the dimension of the input/output. Depending on the task of the neural network (Regression or Classification), the so-called activation function in the output layers is chosen. The activation function determines the mathematical operations performed at each node. For the hidden layers the choice of the activation function is independent of the application of the NN.
-The main advantages of Neural Networks are their universality, which is a result of the nonlinearities in the neurons and their ability to efficiently approximate functions in high-dimensional spaces. These properties are especially useful when considering complex datasets.
-For a NN, a large number of hyperparameters must be determined. The main ones are:\newline\newline
--	Architecture of the NN (number of hidden layers and respective number of neurons)\newline
--	Activation function\newline
--	Optimizer and Learning rate\newline\newline
+\section{Results of the NN}
 
 
-Based on engineering practices presented in the courses “AI in Production Engineering” and “Physics-informed machine learning”, as well as the paper “Real-time prediction of…”, the widely used ADAM optimizer is chosen together with a learning rate of 0.001. 
-Since a binary classification must be conducted, the “Sigmoid” activation function is used in the output layer.
-For the activation function of the hidden layers the hyperbolic tangent (tanh) and the Rectified Linear Unit (ReLu) function are considered. For comparison multiple tests are conducted using the 10-fold stratified cross validation as described in XX. Additionally, different NN architectures (1-7 layers, 5 – 100 neurons) are evaluated. 
 The test results show that especially with bigger NNs, a higher mean prediction accuracy can be achieved using ReLu (approx. 93\%), while the accuracy of the networks using the tanh function reaches its maximum accuracy of around 91\% already with two hidden layers and then stagnates.
 The variance of the prediction accuracy ranges between approx. 1.2\% and approx. 4.1\%. In average, it is around 1\% higher when using ReLu.
 For the NN architectures using only one hidden layer, the shares of false positives and false negatives are similar (approx. 5.8\% vs approx. 4.8\%). However, already with three hidden layers, the share of false negatives decreases to around 2.8\%, while the share of false positives increases to around 6.2\%. Especially with higher numbers of hidden layers this effect is more pronounced when using the ReLu activation function. This indicates at least a partial overfit of the model on the dataset.
 Considering the planned application of the model, an emphasis is put on the robustness and reliability of the expected prediction. Therefore, a model architecture with only one hidden layer and 75 neurons, using the tanh activation function is chosen. The expected prediction accuracy is 89\%, which is around four percent lower than the results obtained with more complex models. However, the expected very low variance of the results (1.33\%) and the balance between the shares of false negatives and false positives (6.1\% vs 4.9\%) ensure the reliability of the prediction and minimize the risk of possible overfitting. Especially in production engineering, a bias in the predictions introduced by overfitting can have detrimental effects on the practical usability of a model and may nullify its practical use in the long term.
 
-\chapter{Results}
-\section{Results of the NN}
 Figure \ref{fig:NN} shows the prediction accuracy for different labels y using the NN with the hyperparameters described in X.X. All predictions were done using the raw, but denoised data of sensor 1 or derived statistical metrics as the input of the NN as this gave the highest accuracies, regardless of the data label.
 It is not possible to correctly predict for the label ‘WD40’ and ‘Lubricant’. In both cases the NN classifies all outputs the same. This problem persists, regardless of the input.
 The predictions for the label ‘Gleitmo’ are slightly better, albeit also with a strong tendency for false negatives. 
@@ -378,6 +420,47 @@ In summary, correctly predicting the presence or the kind of lubricant at the we
 	\caption{Results of the classification using a NN}
 	\label{fig:NN}
 \end{figure}
+
+\subsection{Classification of sample quality (OK, Not OK) }
+Table X.X shows the mean prediction accuracy and the standard deviation of the prediction accuracy of the three different classification methods for the weld-seam quality label (Ok, Not Ok). Apart from the raw data, different statistical metrics are considered as input features. The hyperparameters are set according to chapter X.X.
+Regardless of the input, high mean prediction accuracies above 82\% are achieved. Additionally, the calculated standard deviations are low (< 2.5\%). In contrast to the other methods, the prediction accuracy of the NN improves when using the derived statistical metrics as input. 
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{../img/S1.png}
+	\caption{Results for the weld-seam quality label (Ok, Not Ok)}
+	\label{fig:S1}
+\end{figure}
+
+The shares of the false positives (parts incorrectly classified as “OK”) and false negatives (parts incorrectly classified as “Not OK”) are shown in table X.X. All methods exhibit a bias towards incorrectly classifying samples as “Not OK”. This phenomenon is most prevalent for the predictions using the statistical metrics as an input and especially for the Logistic Regression and Gradient boosting methods.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{../img/S2.png}
+	\caption{Bias towards incorrectly classifying samples}
+	\label{fig:S2}
+\end{figure}
+
+\subsection{Classification of lubricant (WD40, Gleitmo, no lubricant)} 
+The results for the prediction accuracy of the presence of WD40 lubricant at the weld seam are presented in table X.X. Regardless of the model and the input data, all evaluated metrics (mean prediction accuracy, standard deviation of the prediction, share of false positives and negatives) remain unchanged. The reason for this outcome is that all inputs are assigned to the same class (“No WD40 present”).
+The inverse case is observed when trying to predict the presence of lubricant, not considering its exact designation. Here, all inputs are assigned to the class “Lubricant present”, again regardless of the input (mean prediction accuracy: 64.79\%, standard deviation of the results: 0.29).
+The predictions for the presence of Gleitmo are slightly better when using a NN (mean prediction accuracy: > 71\%, standard deviation of the results:  < 3.14), albeit also with a distinct tendency for false negatives (share of false positives > 2.17\%, share of false negatives < 26.45\%)
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{../img/S3.png}
+	\caption{Prediction accuracy of the presence of WD40 lubricant at the weld seam }
+	\label{fig:S3}
+\end{figure} 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{../img/S4.png}
+	\caption{predictions for the presence of Gleitmo }
+	\label{fig:S4}
+\end{figure}
+
 
 \chapter{Discussion}
 Confusion Matrix

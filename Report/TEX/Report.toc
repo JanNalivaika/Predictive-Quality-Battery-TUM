@@ -17,13 +17,17 @@
 \contentsline {subsubsection}{Entropy}{18}{}%
 \contentsline {section}{\numberline {3.4}FFT}{19}{}%
 \contentsline {section}{\numberline {3.5}Continuous Wavelet Transformation}{22}{}%
-\contentsline {section}{\numberline {3.6}Posiible Classification Models}{24}{}%
+\contentsline {section}{\numberline {3.6}Classification Models}{24}{}%
 \contentsline {subsection}{\numberline {3.6.1}LOG REG}{24}{}%
 \contentsline {subsection}{\numberline {3.6.2}Gradient boosting}{24}{}%
-\contentsline {subsection}{\numberline {3.6.3}Usage of a Neural Network}{25}{}%
+\contentsline {subsection}{\numberline {3.6.3}Usage of a Neural Network}{24}{}%
 \contentsline {chapter}{\numberline {4}Results}{27}{}%
-\contentsline {section}{\numberline {4.1}Results of the NN}{27}{}%
-\contentsline {chapter}{\numberline {5}Discussion}{28}{}%
-\contentsline {chapter}{\numberline {6}Summary and Outlook}{29}{}%
-\contentsline {chapter}{\numberline {7}Appendix}{30}{}%
-\contentsline {chapter}{\numberline {8}Contents of the project folder}{31}{}%
+\contentsline {section}{\numberline {4.1}results LOG}{27}{}%
+\contentsline {section}{\numberline {4.2}resulots gradientr boost }{28}{}%
+\contentsline {section}{\numberline {4.3}Results of the NN}{29}{}%
+\contentsline {subsection}{\numberline {4.3.1}Classification of sample quality (OK, Not OK) }{30}{}%
+\contentsline {subsection}{\numberline {4.3.2}Classification of lubricant (WD40, Gleitmo, no lubricant)}{30}{}%
+\contentsline {chapter}{\numberline {5}Discussion}{32}{}%
+\contentsline {chapter}{\numberline {6}Summary and Outlook}{33}{}%
+\contentsline {chapter}{\numberline {7}Appendix}{34}{}%
+\contentsline {chapter}{\numberline {8}Contents of the project folder}{35}{}%
