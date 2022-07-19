@@ -1,4 +1,5 @@
 import numpy as np
+import torch
 import pandas as pd
 from NN_v2 import main
 from NN_Kvalidation import main as mainKval
