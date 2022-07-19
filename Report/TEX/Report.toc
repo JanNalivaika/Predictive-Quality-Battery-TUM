@@ -19,10 +19,11 @@
 \contentsline {section}{\numberline {3.5}Continuous Wavelet Transformation}{22}{}%
 \contentsline {section}{\numberline {3.6}Posiible Classification Models}{24}{}%
 \contentsline {subsection}{\numberline {3.6.1}LOG REG}{24}{}%
-\contentsline {section}{\numberline {3.7}Usage of a Neural Network}{24}{}%
-\contentsline {chapter}{\numberline {4}Results}{26}{}%
-\contentsline {section}{\numberline {4.1}Results of the NN}{26}{}%
-\contentsline {chapter}{\numberline {5}Discussion}{27}{}%
-\contentsline {chapter}{\numberline {6}Summary and Outlook}{28}{}%
-\contentsline {chapter}{\numberline {7}Appendix}{29}{}%
-\contentsline {chapter}{\numberline {8}Contents of the project folder}{30}{}%
+\contentsline {subsection}{\numberline {3.6.2}Gradient boosting}{24}{}%
+\contentsline {subsection}{\numberline {3.6.3}Usage of a Neural Network}{25}{}%
+\contentsline {chapter}{\numberline {4}Results}{27}{}%
+\contentsline {section}{\numberline {4.1}Results of the NN}{27}{}%
+\contentsline {chapter}{\numberline {5}Discussion}{28}{}%
+\contentsline {chapter}{\numberline {6}Summary and Outlook}{29}{}%
+\contentsline {chapter}{\numberline {7}Appendix}{30}{}%
+\contentsline {chapter}{\numberline {8}Contents of the project folder}{31}{}%

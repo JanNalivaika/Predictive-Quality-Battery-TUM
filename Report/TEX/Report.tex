@@ -110,7 +110,7 @@ For validating the welding connection, sensors can record data during the weldin
 
 \chapter{Methodology and Experiments}
 
-The Knowledge Discovery in Databases (KDD) process is structured in four steps. At first Data Cleansing is performed to detect data quality issues or remove anomalies. The second step is Data Transformation to select the possible input data. Further, Data Mining is performed to generate to increase the database. Finally, the evaluation is performed to categorieze the success of a model. In teh following sections these steps are perfomed to predict the quality of a weldbeam with hte help of a given dataset.
+The Knowledge Discovery in Databases (KDD) process is structured in four steps. At first Data Cleansing is performed to detect data quality issues or remove anomalies. The second step is Data Transformation to select the possible input data. Further, Data Mining is performed to generate to increase the database. Finally, the evaluation is performed to categorieze the success of a model. In teh following sections these steps are perfomed to predict the quality of a weldbeam with the help of a given dataset.
 
 
 \section{Goal}
@@ -129,15 +129,18 @@ Each signal log was categorized in four different, equally distributed binary ca
 Aside from statistical inspection, visualizing the data was the first step in obtaining an overview about features of the dataset. The figures below show plotted signal values for randomly chosen samples with varying labels. As can be seen in figure \ref{fig:VIZ1} and \ref{fig:VIZ2}, attempts were made to reproduce the denoising procedure used for signal 1 for signal 2. Additionally, the automatically calculated Person correlation coefficients between the values for signal 1 and 2 were also displayed.
 
 \begin{figure}[H]
-	\includegraphics[width=0.8\linewidth]{../img/VIZ1.png}
+	\centering
+	\includegraphics[width=0.9\linewidth]{../img/VIZ1.png}
 	\caption{Visualization plot for sample 891}
 	\label{fig:VIZ1}
 \end{figure}
 \begin{figure}[H]
-	\includegraphics[width=0.8\linewidth]{../img/VIZ2.png}
+	\centering
+	\includegraphics[width=0.9\linewidth]{../img/VIZ2.png}
 	\caption{Visualization plot for sample 674}
 	\label{fig:VIZ2}
 \end{figure}
+
 
 Based on the data inspection, a few important conclusions could be reached about the dataset: signal 2 was found to be typically much noisier than signal 1 and thus possibly worse for making predictions. Samples marked as “not OK” typically display higher values for all signals; however, no determining boundary distinguishing the two labels could be identified. Furthermore, the correlation coefficients between signals were found to carry little information about the weld quality. Despite reaching the mentioned conclusions, it was difficult to identify the decisive features only based on the visualization. Thus, further analysis including possible data transformation was needed.
 \subsection{Data cleansing}
@@ -151,12 +154,14 @@ Extracting statistical features allows to transform the dataset of one signal in
 One of the most prominent statistical approaches is the arithmetic mean. Although in many cases the method is very useful for characterizing the measurement, it also risks filtering out possibly meaningful outliers, which often makes it inadequate for highly varying data. The figures \ref{fig:S1MEAN} and \ref{fig:S1DNMEAN}  below shows the distribution of the mean values of signal one (raw and denoised) across all measurements in the pre-processed dataset with the distinguishment between the OK/NOK labels.
 
 \begin{figure}[H]
-	\includegraphics[width=0.8\linewidth]{../img/S1_not_OK_MEAN_relabeled.png}
+	\centering
+	\includegraphics[width=0.9\linewidth]{../img/S1_not_OK_MEAN_relabeled.png}
 	\caption{The mean values of signal 1 across samples.}
 	\label{fig:S1MEAN}
 \end{figure}
 \begin{figure}[H]
-	\includegraphics[width=0.8\linewidth]{../img/S1_DN_not_OK_MEAN_relabeled.png}
+	\centering
+	\includegraphics[width=0.9\linewidth]{../img/S1_DN_not_OK_MEAN_relabeled.png}
 	\caption{The mean values of denoised signal 1 across samples.}
 	\label{fig:S1DNMEAN}
 \end{figure}
@@ -168,12 +173,14 @@ As seen in the figures \ref{fig:S1MEAN} and \ref{fig:S1DNMEAN} , for both signal
 Standard deviation (STD) is a popular metric of spread of the values within a sample. Thus, it helps distinguish stable measurements from highly varying ones. In context of quality prediction based on time series data the feature can provide valuable information about possible changes detected in the weld seam. The figure below shows the distribution of standard deviation values across the dataset.
 
 \begin{figure}[H]
-	\includegraphics[width=0.8\linewidth]{../img/S1_not_OK_STD_relabeled.png}
+	\centering
+	\includegraphics[width=0.9\linewidth]{../img/S1_not_OK_STD_relabeled.png}
 	\caption{The Standard deviation of signal 1 across samples.}
 	\label{fig:S1STD}
 \end{figure}
 \begin{figure}[H]
-	\includegraphics[width=0.8\linewidth]{../img/S1_DN_not_OK_STD_relabeled.png}
+	\centering
+	\includegraphics[width=0.9\linewidth]{../img/S1_DN_not_OK_STD_relabeled.png}
 	\caption{The Standard deviation of denoised signal 1 across samples.}
 	\label{fig:S1DNSTD}
 \end{figure}
@@ -184,12 +191,14 @@ Based on the plot (see figures \ref{fig:S1STD} and \ref{fig:S1DNSTD}) the signal
 Other easily identifiable characteristic features within a sample are the maximum, the minimum, as well as the value at a given percentile (most commonly used being Q25, Q75, and Q50 aka the median). The plot below shows the scattering of the first signal’s maximal value across samples which proved to be the most significant metric across all the others mentioned in this section.
 
 \begin{figure}[H]
-	\includegraphics[width=0.8\linewidth]{../img/S1_not_OK_MAX_relabeled.png}
+	\centering
+	\includegraphics[width=0.9\linewidth]{../img/S1_not_OK_MAX_relabeled.png}
 	\caption{The maximum values of signal 1 across samples.}
 	\label{fig:S1MAX}
 \end{figure}
 \begin{figure}[H]
-	\includegraphics[width=0.8\linewidth]{../img/S1_DN_not_OK_MAX_relabeled.png}
+	\centering
+	\includegraphics[width=0.9\linewidth]{../img/S1_DN_not_OK_MAX_relabeled.png}
 	\caption{The maximum values of denoised signal 1 across samples.}
 	\label{fig:S1DNMAX}
 \end{figure}
@@ -198,12 +207,14 @@ Based on the visualization the maximal value seems to be the most promising feat
 \subsubsection{Root mean square}
 The Root mean square (RMS) of a sample is defined as the square root of the arithmetic mean of the squared values in the sample. It is widely used in signal processing as it can be interpreted as the strength of the signal. The plots below show the spreading of the RMS values for signal 1 across samples.
 \begin{figure}[H]
-	\includegraphics[width=0.8\linewidth]{../img/S1_not_OK_RMS_relabeled.png}
+	\centering
+	\includegraphics[width=0.9\linewidth]{../img/S1_not_OK_RMS_relabeled.png}
 	\caption{The RMS values of signal 1 across samples.}
 	\label{fig:S1RMS}
 \end{figure}
 \begin{figure}[H]
-	\includegraphics[width=0.8\linewidth]{../img/S1_DN_not_OK_RMS_relabeled.png}
+	\centering
+	\includegraphics[width=0.9\linewidth]{../img/S1_DN_not_OK_RMS_relabeled.png}
 	\caption{The RMS values of denoised signal 1 across samples.}
 	\label{fig:S1DNRMS}
 \end{figure}
@@ -212,12 +223,14 @@ As can be seen on figures \ref{fig:S1RMS} and \ref{fig:S1DNRMS} the RMS shows a 
 \subsubsection{Skewness}
 Skewness is a measure of the asymmetry of the probability distribution of a real-valued random variable around its mean value. For positive skewness more samples have a height value smaller than the mean; the opposite being true for negatively skew distribution (1). The plots below show the distributions of sample skewness for signal 1 and signal 1 denoised across the measurements.
 \begin{figure}[H]
-	\includegraphics[width=0.8\linewidth]{../img/S1_not_OK_Skewness_relabeled.png}
+	\centering
+	\includegraphics[width=0.9\linewidth]{../img/S1_not_OK_Skewness_relabeled.png}
 	\caption{The Skewness of signal 1 across samples.}
 	\label{fig:S1SK}
 \end{figure}
 \begin{figure}[H]
-	\includegraphics[width=0.8\linewidth]{../img/S1_DN_not_OK_Skewness_relabeled.png}
+	\centering
+	\includegraphics[width=0.9\linewidth]{../img/S1_DN_not_OK_Skewness_relabeled.png}
 	\caption{The Skewness of denoised signal 1 across samples.}
 	\label{fig:S1DNSK}
 \end{figure}
@@ -226,12 +239,14 @@ As visible in the graphs, the poor differentiation of skewness values between th
 \subsubsection{Entropy}
 Entropy is another statistical feature often applied for time series data. It is the measure of impurity associated with a random variable. A sample containing more noise will have a higher entropy value. The graph below shows the distribution of entropy values for signal 1 across the dataset.
 \begin{figure}[H]
-	\includegraphics[width=0.8\linewidth]{../img/S1_not_OK_Entropy_relabeled.png}
+	\centering
+	\includegraphics[width=0.9\linewidth]{../img/S1_not_OK_Entropy_relabeled.png}
 	\caption{The Entropy of signal 1 across samples.}
 	\label{fig:S1EN}
 \end{figure}
 \begin{figure}[H]
-	\includegraphics[width=0.8\linewidth]{../img/S1_DN_not_OK_Entropy_relabeled.png}
+	\centering
+	\includegraphics[width=0.9\linewidth]{../img/S1_DN_not_OK_Entropy_relabeled.png}
 	\caption{The Entropy of denoised signal 1 across samples.}
 	\label{fig:S1DNEN}
 \end{figure}
@@ -246,6 +261,7 @@ FFT or Fast Fourier Transform is an algorithm to transform a signal from time-sp
 To transform the signal python scipy.fftpack package with default parameters was used to perform the FFT transformation. At first signal 1 and Signal 1 DN were transformed for Sample 2 and plotted. Figure \ref{fig:FFT1} shows these 2 Signals after transformation. Signal 1 DN has 1 peak at 0 and is constant showing no peaks (no further information). Signal 1 has multiple peaks all over the spectrum. Therefore, we will take signal 1 as input for further FFT analysis.
 
 \begin{figure}[H]
+	\centering
 	\includegraphics[width=\linewidth]{../img/FFT1.png}
 	\caption{FFT1}
 	\label{fig:FFT1}
@@ -261,11 +277,13 @@ In figure \ref{fig:FFT2} and \ref{fig:FFT3} of signal 1 for the four samples are
 And isn’t useful as an input for the classifier.
 
 \begin{figure}[H]
+	\centering
 	\includegraphics[width=\linewidth]{../img/FFT2.png}
 	\caption{FFT2}
 	\label{fig:FFT2}
 \end{figure}
 \begin{figure}[H]
+	\centering
 	\includegraphics[width=\linewidth]{../img/FFT3.png}
 	\caption{FFT3}
 	\label{fig:FFT3}
@@ -276,12 +294,14 @@ And isn’t useful as an input for the classifier.
 Similarly to Fourier Transform, the wavelet transform maps the signal from time to frequency domain; the key difference being that is also provides time resolution of the transformed signal which makes it more suitable for analyzing non-stationary systems (3). The reasoning behind applying CWT upon the provided dataset was the assumption that certain changes in the signal’s frequency may be caused by particular defects in the welding seam. Furthermore, a wavelet-based algorithm was also mentioned as a part of the labelling process which suggested that the transform may yield valuable information about the weld seam quality.
 The transform was carried out with help of the pywavelets module using the Morlet wavelet and varying ranges of scaling factors (up to 1000). The transformed data was subsequently visualized with the intention of identifying any possible underlying patterns. The following figures show exemplary plots for two randomly chosen samples with differing labels.
 \begin{figure}[H]
-	\includegraphics[width=0.8\linewidth]{../img/Sample_283_DN_(OK).png}
+	\centering
+	\includegraphics[width=0.9\linewidth]{../img/Sample_283_DN_(OK).png}
 	\caption{CWT visualization for sample 283 (Signal 1 denoised).}
 	\label{fig:CWT1}
 \end{figure}
 \begin{figure}[H]
-	\includegraphics[width=0.8\linewidth]{../img/Sample_984_DN_(NOK).png}
+	\centering
+	\includegraphics[width=0.9\linewidth]{../img/Sample_984_DN_(NOK).png}
 	\caption{CWT visualization for sample 984 (Signal 1 denoised).}
 	\label{fig:CW2}
 \end{figure}
@@ -305,6 +325,7 @@ Afterwards train/test split was conducted. The typical 70/30 split ratio was use
 
 The model performed best on the RAW data input. Signal 1 performed the same as the signal 1\_dn. The results are shown in the figure. The accuracies were obtained with Signal 1\_dn as input.
 \begin{figure}[H]
+	\centering
 	\includegraphics[width=\linewidth]{../img/log.png}
 	\caption{Results of Logistic Regression. Y = Classification 
 		X = Input 
@@ -312,8 +333,22 @@ The model performed best on the RAW data input. Signal 1 performed the same as t
 	\label{fig:log}
 \end{figure}
 
+\subsection{Gradient boosting}
+Gradient boosting is a recent machine learning technique used for regression and classification tasks based on ensemble learning. Many weak prediction models are averaged and result in a strong prediction model. XGBoost is a gradient boosting method based on decision trees. It has gained popularity because of its very good performance in machine learning competitions  . XGBoost also impresses with its high computing speed.
+We use the XGBoost library for predicting the quality of battery contacting and to compare the performance to the other used models (neural network and logistic regression). In a first step, we preprocessed our data. Our features are represented by each 112 signal values from 2 sensors as input and our label consists of the respective classification goal. Data from sensor 1 was already denoised. We used wavelets to denoise the signals from sensor 2 in MATLAB. We then conducted a train-test split with the typical split ratio of 70/30 to train the model. For better comparability of our models, to avoid overfitting and to get the best indicator for our overall performance, we performed a stratified cross validation with 10 folds. In order to improve our hyperparameters and the result, a randomized (not exhaustive) grid search was conducted. Furthermore, we performed a principal component analysis to improve in calculation speed and complexity. Table 1 shows our results for the different classification tasks and our best performing feature combinations. “Sensor 1dn” are the denoised signals from sensor 1. “Sensor 2MAT” are the manually denoised signals with MATLAB from sensor 2.
 
-\section{Usage of a Neural Network}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{../img/GB.png}
+	\caption{Results of Gradient boosting with different features
+	}
+	\label{fig:GB}
+\end{figure}
+
+Since we only have limited calculation resources, we performed a not exhaustive grid search for hyperparameter optimization. In order to obtain the best results, it would be beneficial to perform an exhaustive grid search in a next step. The performance of our estimator would also benefit from further feature engineering approaches and more train data. 
+
+\subsection{Usage of a Neural Network}
+
 Another kind of model which can be used for the classification of data are Neural Networks (NNs), also referred to as Multilayer Perceptrons. They are composed of an input layer, multiple hidden layers and an output layer. The number of neurons, also called nodes, in the hidden layers is arbitrary while in the input and output layer it corresponds with the dimension of the input/output. Depending on the task of the neural network (Regression or Classification), the so-called activation function in the output layers is chosen. The activation function determines the mathematical operations performed at each node. For the hidden layers the choice of the activation function is independent of the application of the NN.
 The main advantages of Neural Networks are their universality, which is a result of the nonlinearities in the neurons and their ability to efficiently approximate functions in high-dimensional spaces. These properties are especially useful when considering complex datasets.
 For a NN, a large number of hyperparameters must be determined. The main ones are:\newline\newline
@@ -338,6 +373,7 @@ The predictions for the label ‘Gleitmo’ are slightly better, albeit also wit
 In summary, correctly predicting the presence or the kind of lubricant at the weld seam is not possible with the available data sets and used statistical metrics.
 
 \begin{figure}[H]
+	\centering
 	\includegraphics[width=\linewidth]{../img/NN.png}
 	\caption{Results of the classification using a NN}
 	\label{fig:NN}

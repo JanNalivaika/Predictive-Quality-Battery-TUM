@@ -22,8 +22,9 @@
 \contentsline {figure}{\numberline {3.18}{\ignorespaces CWT visualization for sample 283 (Signal 1 denoised).}}{23}{}%
 \contentsline {figure}{\numberline {3.19}{\ignorespaces CWT visualization for sample 984 (Signal 1 denoised).}}{23}{}%
 \contentsline {figure}{\numberline {3.20}{\ignorespaces Results of Logistic Regression. Y = Classification X = Input }}{24}{}%
+\contentsline {figure}{\numberline {3.21}{\ignorespaces Results of Gradient boosting with different features }}{25}{}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Results of the classification using a NN}}{26}{}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Results of the classification using a NN}}{27}{}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
