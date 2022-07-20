@@ -1,49 +1,33 @@
-import random
-import numpy as np
-import pandas as pd
 import torch
 import torch.nn as nn
-from torch.nn import Sequential, Linear, ReLU, MSELoss, L1Loss, CrossEntropyLoss, NLLLoss, Sigmoid
-from torch.optim import Adam, RMSprop, SGD, NAdam, LBFGS
-from torch import from_numpy, no_grad, argmax
-from torch.utils.data import DataLoader, TensorDataset, random_split
-from sklearn import preprocessing  #
-from sklearn.model_selection import train_test_split
-import matplotlib
-import matplotlib.pyplot as plt
-import warnings
+from torch.nn import CrossEntropyLoss
+from torch.optim import Adam
+from torch import no_grad, argmax
+from torch.utils.data import DataLoader, TensorDataset
+from sklearn import preprocessing
 
-warnings.filterwarnings("ignore", category=UserWarning)
+"""
+Das Neuronale Netz in dieser Datei wird der Übersichtlichkeit halber mit Hilfe der Datei "call_NN.py" aufgerufen.
+Es ist ohne diese Datei nur mit Modifikationen lauffähig
 
-def importSignal(datafile):
-    df = pd.read_excel(io=datafile)
-    ok_label = df.loc[:, 'not OK']
-    ok_label = np.asarray(ok_label)
+"""
 
-    df_just_signal = df.drop(['not OK', 'WD40', 'Gleitmo'], axis=1)
-    signal1 = np.asarray(df_just_signal)
-
-    return signal1, ok_label
 
 class NNClassifier(nn.Module):
-    def __init__(self, num_hidden_layers, num_neurons):
+    def __init__(self, dim_input, num_hidden_layers, num_neurons):
         super().__init__()
         ##############
         ##############
 
-        # define three linear layers##
+        #number of layers is selected in call_NN##
 
-        num_of_features_input = 112
+        num_of_features_input = dim_input
         num_of_classes = 2
         self.num_hidden_layers = num_hidden_layers
 
-        #self.num_of_neurons = num_neurons
-        #num_of_neurons
 
         if num_hidden_layers == 0:
             self.fcOut = nn.Linear(num_of_features_input, num_of_classes)
-
-
         if num_hidden_layers >= 1:
             self.fc1 = nn.Linear(num_of_features_input, num_neurons)
             if num_hidden_layers >= 2:
@@ -70,47 +54,44 @@ class NNClassifier(nn.Module):
         ##############
         ##############
 
-        # define the activation functions for the three previously define linear layers
         if self.num_hidden_layers >= 0:
             if self.num_hidden_layers >= 1:
-                x = torch.tanh(self.fc1(x))
+                x = torch.relu(self.fc1(x))
                 if self.num_hidden_layers >= 2:
-                    x = torch.tanh(self.fc2(x))
+                    x = torch.relu(self.fc2(x))
                     if self.num_hidden_layers >= 3:
-                        x = torch.tanh(self.fc3(x))
+                        x = torch.relu(self.fc3(x))
                         if self.num_hidden_layers >= 4:
-                            x = torch.tanh(self.fc4(x))
+                            x = torch.relu(self.fc4(x))
                             if self.num_hidden_layers >= 5:
-                                x = torch.tanh(self.fc5(x))
+                                x = torch.relu(self.fc5(x))
                                 if self.num_hidden_layers >= 6:
-                                    x = torch.tanh(self.fc6(x))
+                                    x = torch.relu(self.fc6(x))
                                     if self.num_hidden_layers >= 7:
-                                        x = torch.tanh(self.fc7(x))
+                                        x = torch.relu(self.fc7(x))
                                         if self.num_hidden_layers > 8:
                                             print('number of hidden layers must be < 8')
 
             x = torch.sigmoid(self.fcOut(x))
         else:
-            print('number of hidden layers must be >0')
+            print('number of hidden layers must be > 0')
 
         ##############
         ##############
         return x
 
 
-def main(num_hidden_layers, num_neurons, X_train, y_train, X_val, y_val):
+def main(dim_input, num_hidden_layers, num_neurons, X_train, y_train, X_val, y_val):
     torch.manual_seed(123)
     BATCH_SIZE = 128
     EPOCHS_ADAM = 22
-    EPOCH_LBFGS = 0
-    LEARNING_RATE = 0.001
 
+    learning_rate = 0.001
 
     # normalize and transform the data
     scaler = preprocessing.StandardScaler()
     X_train_scaled = scaler.fit_transform(X_train)
     X_val_scaled = scaler.transform(X_val)
-
 
     ##############
     ##############
@@ -127,12 +108,13 @@ def main(num_hidden_layers, num_neurons, X_train, y_train, X_val, y_val):
 
     ##############
     ##############
+    # create model
+    model = NNClassifier(dim_input, num_hidden_layers, num_neurons)
+    # set optimizer and common loss function for classification
+    optimizer = Adam(model.parameters(), lr=learning_rate)
+    loss_fun = CrossEntropyLoss()
 
-    standard_model = NNClassifier(num_hidden_layers, num_neurons)  # create model from calss NNClassifier
-
-    optimizer = Adam(standard_model.parameters(), lr=LEARNING_RATE)  # optimizer for finding optimal weights
-    loss_fun = CrossEntropyLoss()  # define common loss function for classification
-
+    #train model and evaluate performance on train dataset
     for epoch in range(EPOCHS_ADAM):
         epoch_loss = 0.0
         for inputs, true_output in dl_train:
@@ -141,55 +123,57 @@ def main(num_hidden_layers, num_neurons, X_train, y_train, X_val, y_val):
             ##############
             ##############
 
-            logits = standard_model(inputs)
+            logits = model(inputs)
+
             to = true_output.type(torch.LongTensor)
             loss = loss_fun(logits, to)
 
+            #optimizer parameters/perform backward step
             epoch_loss += float(loss.detach())
-
             optimizer.zero_grad()
-
             loss.backward()
-
             optimizer.step()
 
         with no_grad():
-            standard_model.eval()
+            model.eval()
             train_acc = 0.0
             for inputs, true_output in dl_train:
-                predictions = standard_model(inputs)
 
+                predictions = model(inputs)
                 train_acc += (argmax(predictions, -1) == true_output).sum()
 
-        standard_model.train()
+        model.train()
 
+        #optionally display training accuracy
         #print(["Epoch: %d, Training accuracy: %3.4f" % (
             #epoch + 1, train_acc * 100 / len(dl_train.dataset))])
 
+    torch.save(model.state_dict(), "my_classification_model.pt")
 
-    torch.save(standard_model.state_dict(), "my_classification_model.pt")
-
+    # evalute performance on test/validation data
     with no_grad():
-        standard_model.eval()
+        model.eval()
         epoch_loss = 0.0
         val_acc = 0
         false_positive = 0
         false_negative = 0
+
         for inputs, labels in dl_val:
-            logits = standard_model(inputs)
-            labels_to = labels.type(torch.LongTensor)
-            #loss = loss_fun(logits, labels_to)
+            logits = model(inputs)
 
             epoch_loss += float(loss.detach())
             val_acc += (argmax(logits, -1) == labels).sum()
+
+            # false positives und negatives werden hier "sinnvoll" berechnet, d.h. false positve = fälschlicherweise als
+            # ok klassifiziert. Beim label 'lubricant'  müssen diese werte umgedreht betrachtet werden, d.h.
+            # die false positives entsprechen dann den false negatives
             false_negative += (argmax(logits, -1) > labels).sum()
-            false_positive += (argmax(logits, -1) < labels).sum() # y_i = 1 -> teil ist nok, logits (=prediction) = 0 = teil ist ok
-            #print(logits.shape)
+            false_positive += (argmax(logits, -1) < labels).sum()
 
 
-        print(["Validation accuracy: %3.4f" % (val_acc * 100 / len(dl_val.dataset))])
-        print(["Validation false negatives: %3.4f" % (false_negative * 100 / len(dl_val.dataset))])
-        print(["Validation false positives: %3.4f" % (false_positive * 100 / len(dl_val.dataset))])
+        print(["Test/Validation accuracy: %3.4f" % (val_acc * 100 / len(dl_val.dataset))])
+        print(["Test/Validation false negatives: %3.4f" % (false_negative * 100 / len(dl_val.dataset))])
+        print(["Test/Validation false positives: %3.4f" % (false_positive * 100 / len(dl_val.dataset))])
         val_acc_return = val_acc * 100 / len(dl_val.dataset)
         false_negative_return = false_negative * 100 / len(dl_val.dataset)
         false_positive_return = false_positive * 100 / len(dl_val.dataset)
