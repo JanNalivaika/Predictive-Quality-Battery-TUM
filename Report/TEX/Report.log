@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2022.4.20)  17 JUL 2022 17:51
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2022.4.20)  19 JUL 2022 09:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -643,203 +643,262 @@ Underfull \hbox (badness 10000) in paragraph at lines 126--128
 <../img/VIZ1.png, id=35, 224.037pt x 167.8635pt>
 File: ../img/VIZ1.png Graphic file (type png)
 <use ../img/VIZ1.png>
-Package pdftex.def Info: ../img/VIZ1.png  used on input line 132.
-(pdftex.def)             Requested size: 341.43437pt x 255.83134pt.
+Package pdftex.def Info: ../img/VIZ1.png  used on input line 133.
+(pdftex.def)             Requested size: 384.1096pt x 287.80513pt.
 <../img/VIZ2.png, id=37, 224.037pt x 167.8635pt>
 File: ../img/VIZ2.png Graphic file (type png)
 <use ../img/VIZ2.png>
-Package pdftex.def Info: ../img/VIZ2.png  used on input line 137.
-(pdftex.def)             Requested size: 341.43437pt x 255.83134pt.
+Package pdftex.def Info: ../img/VIZ2.png  used on input line 139.
+(pdftex.def)             Requested size: 384.1096pt x 287.80513pt.
  [8 <../img/VIZ1.png>] [9 <../img/VIZ2.png>]
 <../img/S1_not_OK_MEAN_relabeled.png, id=46, 462.528pt x 346.896pt>
 File: ../img/S1_not_OK_MEAN_relabeled.png Graphic file (type png)
 <use ../img/S1_not_OK_MEAN_relabeled.png>
 Package pdftex.def Info: ../img/S1_not_OK_MEAN_relabeled.png  used on input lin
-e 154.
-(pdftex.def)             Requested size: 341.43437pt x 256.09029pt.
+e 158.
+(pdftex.def)             Requested size: 384.1096pt x 288.09827pt.
 <../img/S1_DN_not_OK_MEAN_relabeled.png, id=47, 462.528pt x 346.896pt>
 File: ../img/S1_DN_not_OK_MEAN_relabeled.png Graphic file (type png)
 <use ../img/S1_DN_not_OK_MEAN_relabeled.png>
 Package pdftex.def Info: ../img/S1_DN_not_OK_MEAN_relabeled.png  used on input 
-line 159.
-(pdftex.def)             Requested size: 341.43437pt x 256.09029pt.
+line 164.
+(pdftex.def)             Requested size: 384.1096pt x 288.09827pt.
  [10] [11 <../img/S1_not_OK_MEAN_relabeled.png> <../img/S1_DN_not_OK_MEAN_relab
 eled.png>]
 <../img/S1_not_OK_STD_relabeled.png, id=57, 462.528pt x 346.896pt>
 File: ../img/S1_not_OK_STD_relabeled.png Graphic file (type png)
 <use ../img/S1_not_OK_STD_relabeled.png>
 Package pdftex.def Info: ../img/S1_not_OK_STD_relabeled.png  used on input line
- 171.
-(pdftex.def)             Requested size: 341.43437pt x 256.09029pt.
+ 177.
+(pdftex.def)             Requested size: 384.1096pt x 288.09827pt.
 <../img/S1_DN_not_OK_STD_relabeled.png, id=58, 462.528pt x 346.896pt>
 File: ../img/S1_DN_not_OK_STD_relabeled.png Graphic file (type png)
 <use ../img/S1_DN_not_OK_STD_relabeled.png>
 Package pdftex.def Info: ../img/S1_DN_not_OK_STD_relabeled.png  used on input l
-ine 176.
-(pdftex.def)             Requested size: 341.43437pt x 256.09029pt.
+ine 183.
+(pdftex.def)             Requested size: 384.1096pt x 288.09827pt.
  [12 <../img/S1_not_OK_STD_relabeled.png>]
 <../img/S1_not_OK_MAX_relabeled.png, id=63, 462.528pt x 346.896pt>
 File: ../img/S1_not_OK_MAX_relabeled.png Graphic file (type png)
 <use ../img/S1_not_OK_MAX_relabeled.png>
 Package pdftex.def Info: ../img/S1_not_OK_MAX_relabeled.png  used on input line
- 187.
-(pdftex.def)             Requested size: 341.43437pt x 256.09029pt.
+ 195.
+(pdftex.def)             Requested size: 384.1096pt x 288.09827pt.
 <../img/S1_DN_not_OK_MAX_relabeled.png, id=64, 462.528pt x 346.896pt>
 File: ../img/S1_DN_not_OK_MAX_relabeled.png Graphic file (type png)
 <use ../img/S1_DN_not_OK_MAX_relabeled.png>
 Package pdftex.def Info: ../img/S1_DN_not_OK_MAX_relabeled.png  used on input l
-ine 192.
-(pdftex.def)             Requested size: 341.43437pt x 256.09029pt.
- [13 <../img/S1_DN_not_OK_STD_relabeled.png>]
-<../img/S1_not_OK_RMS_relabeled.png, id=69, 462.528pt x 346.896pt>
+ine 201.
+(pdftex.def)             Requested size: 384.1096pt x 288.09827pt.
+ [13 <../img/S1_DN_not_OK_STD_relabeled.png>] [14 <../img/S1_not_OK_MAX_relabel
+ed.png> <../img/S1_DN_not_OK_MAX_relabeled.png>]
+<../img/S1_not_OK_RMS_relabeled.png, id=74, 462.528pt x 346.896pt>
 File: ../img/S1_not_OK_RMS_relabeled.png Graphic file (type png)
 <use ../img/S1_not_OK_RMS_relabeled.png>
 Package pdftex.def Info: ../img/S1_not_OK_RMS_relabeled.png  used on input line
- 201.
-(pdftex.def)             Requested size: 341.43437pt x 256.09029pt.
- [14 <../img/S1_not_OK_MAX_relabeled.png> <../img/S1_DN_not_OK_MAX_relabeled.pn
-g>]
+ 211.
+(pdftex.def)             Requested size: 384.1096pt x 288.09827pt.
 <../img/S1_DN_not_OK_RMS_relabeled.png, id=75, 462.528pt x 346.896pt>
 File: ../img/S1_DN_not_OK_RMS_relabeled.png Graphic file (type png)
 <use ../img/S1_DN_not_OK_RMS_relabeled.png>
 Package pdftex.def Info: ../img/S1_DN_not_OK_RMS_relabeled.png  used on input l
-ine 206.
-(pdftex.def)             Requested size: 341.43437pt x 256.09029pt.
+ine 217.
+(pdftex.def)             Requested size: 384.1096pt x 288.09827pt.
  [15 <../img/S1_not_OK_RMS_relabeled.png>]
 <../img/S1_not_OK_Skewness_relabeled.png, id=80, 462.528pt x 346.896pt>
 File: ../img/S1_not_OK_Skewness_relabeled.png Graphic file (type png)
 <use ../img/S1_not_OK_Skewness_relabeled.png>
 Package pdftex.def Info: ../img/S1_not_OK_Skewness_relabeled.png  used on input
- line 215.
-(pdftex.def)             Requested size: 341.43437pt x 256.09029pt.
+ line 227.
+(pdftex.def)             Requested size: 384.1096pt x 288.09827pt.
 <../img/S1_DN_not_OK_Skewness_relabeled.png, id=81, 462.528pt x 346.896pt>
 File: ../img/S1_DN_not_OK_Skewness_relabeled.png Graphic file (type png)
 <use ../img/S1_DN_not_OK_Skewness_relabeled.png>
 Package pdftex.def Info: ../img/S1_DN_not_OK_Skewness_relabeled.png  used on in
-put line 220.
-(pdftex.def)             Requested size: 341.43437pt x 256.09029pt.
+put line 233.
+(pdftex.def)             Requested size: 384.1096pt x 288.09827pt.
  [16 <../img/S1_DN_not_OK_RMS_relabeled.png>]
-<../img/S1_not_OK_Entropy_relabeled.png, id=86, 462.528pt x 346.896pt>
+[17 <../img/S1_not_OK_Skewness_relabeled.png> <../img/S1_DN_not_OK_Skewness_rel
+abeled.png>]
+<../img/S1_not_OK_Entropy_relabeled.png, id=92, 462.528pt x 346.896pt>
 File: ../img/S1_not_OK_Entropy_relabeled.png Graphic file (type png)
 <use ../img/S1_not_OK_Entropy_relabeled.png>
 Package pdftex.def Info: ../img/S1_not_OK_Entropy_relabeled.png  used on input 
-line 229.
-(pdftex.def)             Requested size: 341.43437pt x 256.09029pt.
-
-[17 <../img/S1_not_OK_Skewness_relabeled.png> <../img/S1_DN_not_OK_Skewness_rel
-abeled.png>]
+line 243.
+(pdftex.def)             Requested size: 384.1096pt x 288.09827pt.
 <../img/S1_DN_not_OK_Entropy_relabeled.png, id=93, 462.528pt x 346.896pt>
 File: ../img/S1_DN_not_OK_Entropy_relabeled.png Graphic file (type png)
 <use ../img/S1_DN_not_OK_Entropy_relabeled.png>
 Package pdftex.def Info: ../img/S1_DN_not_OK_Entropy_relabeled.png  used on inp
-ut line 234.
-(pdftex.def)             Requested size: 341.43437pt x 256.09029pt.
+ut line 249.
+(pdftex.def)             Requested size: 384.1096pt x 288.09827pt.
  [18 <../img/S1_not_OK_Entropy_relabeled.png>]
 <../img/FFT1.png, id=98, 246.58524pt x 184.86665pt>
 File: ../img/FFT1.png Graphic file (type png)
 <use ../img/FFT1.png>
-Package pdftex.def Info: ../img/FFT1.png  used on input line 249.
+Package pdftex.def Info: ../img/FFT1.png  used on input line 265.
 (pdftex.def)             Requested size: 426.79135pt x 319.9954pt.
  [19 <../img/S1_DN_not_OK_Entropy_relabeled.png>]
 <../img/FFT2.png, id=103, 223.45885pt x 167.52187pt>
 File: ../img/FFT2.png Graphic file (type png)
 <use ../img/FFT2.png>
-Package pdftex.def Info: ../img/FFT2.png  used on input line 264.
+Package pdftex.def Info: ../img/FFT2.png  used on input line 281.
 (pdftex.def)             Requested size: 426.79135pt x 319.98448pt.
 <../img/FFT3.png, id=104, 223.45885pt x 167.52187pt>
 File: ../img/FFT3.png Graphic file (type png)
 <use ../img/FFT3.png>
-Package pdftex.def Info: ../img/FFT3.png  used on input line 269.
+Package pdftex.def Info: ../img/FFT3.png  used on input line 287.
 (pdftex.def)             Requested size: 426.79135pt x 319.98448pt.
  [20 <../img/FFT1.png>] [21 <../img/FFT2.png>]
 <../img/Sample_283_DN_(OK).png, id=113, 462.528pt x 346.896pt>
 File: ../img/Sample_283_DN_(OK).png Graphic file (type png)
 <use ../img/Sample_283_DN_(OK).png>
-Package pdftex.def Info: ../img/Sample_283_DN_(OK).png  used on input line 279.
+Package pdftex.def Info: ../img/Sample_283_DN_(OK).png  used on input line 298.
 
-(pdftex.def)             Requested size: 341.43437pt x 256.09029pt.
+(pdftex.def)             Requested size: 384.1096pt x 288.09827pt.
 <../img/Sample_984_DN_(NOK).png, id=114, 462.528pt x 346.896pt>
 File: ../img/Sample_984_DN_(NOK).png Graphic file (type png)
 <use ../img/Sample_984_DN_(NOK).png>
-Package pdftex.def Info: ../img/Sample_984_DN_(NOK).png  used on input line 284
+Package pdftex.def Info: ../img/Sample_984_DN_(NOK).png  used on input line 304
 .
-(pdftex.def)             Requested size: 341.43437pt x 256.09029pt.
+(pdftex.def)             Requested size: 384.1096pt x 288.09827pt.
 
 [22 <../img/FFT3.png>] [23 <../img/Sample_283_DN_(OK).png> <../img/Sample_984_D
 N_(NOK).png>]
-Underfull \hbox (badness 10000) in paragraph at lines 298--303
+
+LaTeX Warning: Citation 'What is XGBoost? | Data Science | NVIDIA Glossary' on 
+page 24 undefined on input line 327.
+
+
+LaTeX Warning: Citation 'XGBoost | Kaggle' on page 24 undefined on input line 3
+27.
+
+
+Overfull \hbox (112.8051pt too wide) in paragraph at lines 327--333
+\OT1/cmr/m/n/12 put-ing speed.[[], []]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 342--350
 
  []
 
-<../img/log.png, id=125, 842.39719pt x 265.74281pt>
+
+Underfull \hbox (badness 10000) in paragraph at lines 342--350
+
+ []
+
+[24]
+Underfull \hbox (badness 10000) in paragraph at lines 354--360
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 354--360
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 354--360
+
+ []
+
+[25] [26]
+Chapter 4.
+
+Underfull \hbox (badness 10000) in paragraph at lines 371--374
+
+ []
+
+<../img/log.png, id=134, 842.39719pt x 265.74281pt>
 File: ../img/log.png Graphic file (type png)
 <use ../img/log.png>
-Package pdftex.def Info: ../img/log.png  used on input line 308.
+Package pdftex.def Info: ../img/log.png  used on input line 380.
 (pdftex.def)             Requested size: 426.79135pt x 134.63495pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 317--323
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 317--323
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 317--323
-
- []
-
-[24 <../img/log.png>] [25]
-Chapter 4.
-<../img/NN.png, id=133, 983.92593pt x 239.39438pt>
-File: ../img/NN.png Graphic file (type png)
-<use ../img/NN.png>
-Package pdftex.def Info: ../img/NN.png  used on input line 341.
-(pdftex.def)             Requested size: 426.79135pt x 103.83983pt.
-[26
-
- <../img/NN.png>]
-Chapter 5.
 [27
 
 ]
+<../img/GB.png, id=138, 660.96938pt x 173.14688pt>
+File: ../img/GB.png Graphic file (type png)
+<use ../img/GB.png>
+Package pdftex.def Info: ../img/GB.png  used on input line 396.
+(pdftex.def)             Requested size: 426.79135pt x 111.80437pt.
+ [28 <../img/log.png> <../img/GB.png>]
+<../img/NN.png, id=144, 983.92593pt x 239.39438pt>
+File: ../img/NN.png Graphic file (type png)
+<use ../img/NN.png>
+Package pdftex.def Info: ../img/NN.png  used on input line 419.
+(pdftex.def)             Requested size: 426.79135pt x 103.83983pt.
+ [29 <../img/NN.png>]
+<../img/S1.png, id=150, 659.46375pt x 152.82094pt>
+File: ../img/S1.png Graphic file (type png)
+<use ../img/S1.png>
+Package pdftex.def Info: ../img/S1.png  used on input line 431.
+(pdftex.def)             Requested size: 426.79135pt x 98.90569pt.
+<../img/S2.png, id=151, 663.22781pt x 158.09062pt>
+File: ../img/S2.png Graphic file (type png)
+<use ../img/S2.png>
+Package pdftex.def Info: ../img/S2.png  used on input line 440.
+(pdftex.def)             Requested size: 426.79135pt x 101.73247pt.
+ [30 <../img/S1.png> <../img/S2.png>]
+<../img/S3.png, id=157, 662.475pt x 155.07938pt>
+File: ../img/S3.png Graphic file (type png)
+<use ../img/S3.png>
+Package pdftex.def Info: ../img/S3.png  used on input line 452.
+(pdftex.def)             Requested size: 426.79135pt x 99.90828pt.
+<../img/S4.png, id=158, 657.95813pt x 158.09062pt>
+File: ../img/S4.png Graphic file (type png)
+<use ../img/S4.png>
+Package pdftex.def Info: ../img/S4.png  used on input line 459.
+(pdftex.def)             Requested size: 426.79135pt x 102.5478pt.
+ [31 <../img/S3.png> <../img/S4.png>]
+Chapter 5.
+[32
+
+]
 Chapter 6.
-[28
+[33
 
 ]
 Chapter 7.
 
-LaTeX Warning: Empty bibliography on input line 371.
+LaTeX Warning: Empty bibliography on input line 490.
 
-[29
+[34
 
 ]
 Chapter 8.
-[30
+[35
 
 ] (Report.aux)
+
+LaTeX Warning: There were undefined references.
+
+
+Package biblatex Warning: Please (re)run Biber on the file:
+(biblatex)                Report
+(biblatex)                and rerun LaTeX afterwards.
+
 Package logreq Info: Writing requests to 'Report.run.xml'.
 \openout1 = `Report.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 12440 strings out of 478582
- 229573 string characters out of 2844344
- 945438 words of memory out of 3000000
- 30476 multiletter control sequences out of 15000+600000
+ 12663 strings out of 478582
+ 233823 string characters out of 2844344
+ 947630 words of memory out of 3000000
+ 30694 multiletter control sequences out of 15000+600000
  478797 words of font info for 65 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 60i,7n,68p,1012b,1790s stack positions out of 10000i,1000n,20000p,200000b,80000s
+ 60i,7n,68p,1238b,1790s stack positions out of 10000i,1000n,20000p,200000b,80000s
 <C:/Users/naliv/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/
 cmbx12.pfb><C:/Users/naliv/AppData/Local/Programs/MiKTeX/fonts/type1/public/ams
 fonts/cm/cmr12.pfb><C:/Users/naliv/AppData/Local/Programs/MiKTeX/fonts/type1/pu
 blic/amsfonts/cm/cmr17.pfb><C:/Users/naliv/AppData/Local/Programs/MiKTeX/fonts/
 type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on Report.pdf (32 pages, 1556794 bytes).
+Output written on Report.pdf (37 pages, 1637629 bytes).
 PDF statistics:
- 169 PDF objects out of 1000 (max. 8388607)
+ 197 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 111 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 136 words of extra memory for PDF output out of 10000 (max. 10000000)
 

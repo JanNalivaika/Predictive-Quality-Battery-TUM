@@ -21,9 +21,14 @@
 \contentsline {figure}{\numberline {3.17}{\ignorespaces FFT3}}{22}{}%
 \contentsline {figure}{\numberline {3.18}{\ignorespaces CWT visualization for sample 283 (Signal 1 denoised).}}{23}{}%
 \contentsline {figure}{\numberline {3.19}{\ignorespaces CWT visualization for sample 984 (Signal 1 denoised).}}{23}{}%
-\contentsline {figure}{\numberline {3.20}{\ignorespaces Results of Logistic Regression. Y = Classification X = Input }}{24}{}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Results of the classification using a NN}}{26}{}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Results of Logistic Regression. Y = Classification X = Input }}{28}{}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Results of Gradient boosting with different features }}{28}{}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Results of the classification using a NN}}{29}{}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Results for the weld-seam quality label (Ok, Not Ok)}}{30}{}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Bias towards incorrectly classifying samples}}{30}{}%
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Prediction accuracy of the presence of WD40 lubricant at the weld seam }}{31}{}%
+\contentsline {figure}{\numberline {4.7}{\ignorespaces predictions for the presence of Gleitmo }}{31}{}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
