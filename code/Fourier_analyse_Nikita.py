@@ -9,12 +9,12 @@ from scipy.signal import savgol_filter
 
 def importData(datafile):
     try:
-        new_name = datafile.replace(".xlsx", ".npy")
+        new_name = datafile.replace(".xlsx", ".npy")            #if file not created create first
         with open(new_name, 'rb') as f:
             df = np.load(f)
             #print(df)
     except:
-        df = pd.read_excel(io=datafile)
+        df = pd.read_excel(io=datafile)                         #if created do this
         print(df)
         df = np.asarray(df)
         print(df)
@@ -24,6 +24,7 @@ def importData(datafile):
         #print("we are here")
     return df
 
+### slector of data signals ###
 def selector(data, x):
     #x = random.randint(2, 200) # 0 - 200 WD 40 / 200 - 400 GLeitmo
     signal1 = data[x, 6:117]
@@ -44,13 +45,13 @@ def fourier(s1,s1DN, s2, s1_sample2):
     x = np.linspace(0.0, N * T, N)
     y = np.sin(50.0 * 2.0*np.pi*x) + np.sin(80.0 * 2.0*np.pi*x) + np.cos(180.0 * 2.0*np.pi*x)
 
-    signal1_DN_self = savgol_filter(s1, 111, 9)
+    #signal1_DN_self = savgol_filter(s1, 111, 9)
 
     yf_1 = scipy.fftpack.fft(s1)
     #print(yf_1)
     yf_1DN = scipy.fftpack.fft(s1DN)
     #yf_2 = scipy.fftpack.fft(s2)
-    yf_1_sample2 = scipy.fftpack.fft(s1_sample2)
+    #yf_1_sample2 = scipy.fftpack.fft(s1_sample2)
     #test = scipy.fftpack.fft(y)
 
     #yf_1DN_self = scipy.fftpack.fft(signal1_DN_self)
@@ -59,6 +60,7 @@ def fourier(s1,s1DN, s2, s1_sample2):
     xf = np.linspace(0.0, 1.0 / (2.0 * T), N // 2)
     #print(xf)
 
+    ### plotting the results ###
     fig, ax = plt.subplots()
     ax.plot(xf, 2.0 / N * np.abs(yf_1[:N // 2]), label="Sample WD 40")
 
