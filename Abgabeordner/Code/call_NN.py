@@ -106,11 +106,11 @@ for l in range(0, hid_layers.size):
 
         split_iteration = 0
         for train_index, test_index in skf.split(X, y):
+            print('fold nr:', split_iteration+1)
             X_train, X_test = X[train_index], X[test_index]
             y_train, y_test = y[train_index], y[test_index]
 
             temp_acc[split_iteration], temp_fn[split_iteration], temp_fp[split_iteration] = mainKval(dim_input, hid_layers[l], neurons[n], X_train, y_train, X_test, y_test)
-            print(temp_acc[split_iteration])
             split_iteration += 1
 
         mean_err[l, n, 0] = np.mean(temp_acc)
@@ -118,7 +118,7 @@ for l in range(0, hid_layers.size):
         fn_fp[l, n, 0] = np.mean(temp_fn)
         fn_fp[l, n, 1] = np.mean(temp_fp)
 
-print('mean acc & std:',mean_err, '\n\nfalse negatives & false positves:', fn_fp)
+print('\nmean acc & std:',mean_err, '\n\nfalse negatives & false positves:', fn_fp)
 
 
 for h in range(0, hid_layers.size):

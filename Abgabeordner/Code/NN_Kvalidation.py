@@ -171,7 +171,7 @@ def main(dim_input, num_hidden_layers, num_neurons, X_train, y_train, X_val, y_v
             false_positive += (argmax(logits, -1) < labels).sum()
 
 
-        print(["Test: %3.4f" % (val_acc * 100 / len(dl_val.dataset))])
+        print(["Test accuracy: %3.4f" % (val_acc * 100 / len(dl_val.dataset))])
         print(["Test false negatives: %3.4f" % (false_negative * 100 / len(dl_val.dataset))])
         print(["Test false positives: %3.4f" % (false_positive * 100 / len(dl_val.dataset))])
         val_acc_return = val_acc * 100 / len(dl_val.dataset)
