@@ -68,7 +68,7 @@ if __name__ == "__main__":
     elif check_Gleitmo == True:
         datafile = "../Data/Statistical_features/S1_relabeled_stats.xlsx"
         nok, signal_std, WD40, Gleitmo, Lubricant = importStatFeatures(datafile)
-        datafile = "../Data/S1.xlsx"
+        datafile = "../Data/All_Data/S1.xlsx"
         signal1, _ = importSignal(datafile)
 
     # histogramm of the labels

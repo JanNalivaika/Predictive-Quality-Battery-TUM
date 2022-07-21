@@ -134,9 +134,9 @@ def main(input_name, output_name):
 
 if __name__ == "__main__":
     print("Lets GOOOOO")
-    S1 = "../Data/S1.xlsx"
-    S1_DN = "../Data/S1_DN.xlsx"
-    S2 = "../Data/S2.xlsx"
+    S1 = "../Data/All_Data/S1.xlsx"
+    S1_DN = "../Data/All_Data/S1_DN.xlsx"
+    S2 = "../Data/All_Data/S2.xlsx"
 
     data, data_just_signal = read_pandas(S1_DN)                                                 #loading data
     mean, std = mean_and_std(data_just_signal)                                                  #calc mean and std
