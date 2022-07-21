@@ -3,6 +3,8 @@ import pandas as pd
 from NN_Kvalidation import main as mainKval
 from sklearn.model_selection import StratifiedKFold
 import matplotlib.pyplot as plt
+import warnings
+warnings.filterwarnings("ignore")
 
 """
 min_num_hidden_layers: minimale anzahl der betrachteten hidden layer
@@ -68,7 +70,7 @@ mean_err = np.zeros((x1, x2, x3))
 fn_fp = np.zeros((x1, x2, x3))
 
 # import data
-datafile = "../Data/Statistical_features/S1_DN_relabeled.xlsx"
+datafile = "../Data/Signals_relabeled/S1_DN_relabeled.xlsx"
 RAW, NOK = importSignal(datafile)
 
 datafile = "../Data/Statistical_features/S1_DN_relabeled_stats.xlsx"

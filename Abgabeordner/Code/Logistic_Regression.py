@@ -5,6 +5,8 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split, StratifiedKFold
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
+import warnings
+warnings.filterwarnings("ignore")
 
 #### data import ####
 def read_pandas(datafile):
@@ -151,4 +153,4 @@ if __name__ == "__main__":
     plt.errorbar(0, score_mean * 100, standard_dev * 100, capsize=10,
                 capthick=1, ls='none')
     plt.show()
-    fig.savefig('../Data/code_for_visualizations/Data_Visualization_plots/Log Reg Accuracies/Accuracy_Log_Reg_on_RAW_NOK_0-100.jpg', bbox_inches='tight', dpi=250)
+    fig.savefig('../Data/Accuracy_Log_Reg_on_RAW_NOK_0-100.jpg', bbox_inches='tight', dpi=250)
