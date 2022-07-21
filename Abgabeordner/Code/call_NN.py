@@ -68,10 +68,10 @@ mean_err = np.zeros((x1, x2, x3))
 fn_fp = np.zeros((x1, x2, x3))
 
 # import data
-datafile = "../Data/S1_DN_relabeled.xlsx"
+datafile = "../Data/Statistical_features/S1_DN_relabeled.xlsx"
 RAW, NOK = importSignal(datafile)
 
-datafile = "../Data/S1_DN_relabeled_stats.xlsx"
+datafile = "../Data/Statistical_features/S1_DN_relabeled_stats.xlsx"
 _, signal_std, signal_mean, signal_rms, WD40, Gleitmo, Lubricant = importStatFeatures(datafile)
 
 # Input Daten durch auskommentieren auswählen

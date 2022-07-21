@@ -59,14 +59,14 @@ if __name__ == "__main__":
 
     if check_Gleitmo == False:
 
-        S1_relabeled = "../Data/S1_relabeled.xlsx"
+        S1_relabeled = "../Data/Signals_relabeled/S1_relabeled.xlsx"
         label, signal = read_pandas(S1_relabeled)
         X = signal                                                            #RAW DATA as feature -> Accurace = 0.910
         y = label["not OK"].to_numpy()
 
 
     elif check_Gleitmo == True:
-        datafile = "../Data/S1_relabeled_stats.xlsx"
+        datafile = "../Data/Statistical_features/S1_relabeled_stats.xlsx"
         nok, signal_std, WD40, Gleitmo, Lubricant = importStatFeatures(datafile)
         datafile = "../Data/S1.xlsx"
         signal1, _ = importSignal(datafile)
